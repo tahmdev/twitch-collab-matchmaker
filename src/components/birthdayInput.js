@@ -2,10 +2,37 @@ import Select from 'react-select'
 import moment from "moment"
 import { useEffect, useState } from "react"
 
-const BirthdayInput = ({minimumAge}) => {
-  let [day, setDay] = useState(1)
-  let [month, setMonth] = useState({value: 1, label: "January"})
-  let [year, setYear] = useState(1900)
+const BirthdayInput = ({minimumAge, callback, initial}) => {
+  let [day, setDay] = useState(moment(initial).format("DD"))
+  let [month, setMonth] = useState(() => {
+    switch(moment(initial).format("MM")){
+      case "01":
+        return {value: 1, label: "January"}
+      case "02":
+        return {value: 2, label: "February"}
+      case "03":
+        return {value: 3, label: "March"}
+      case "04":
+        return {value: 4, label: "Apri"}
+      case "05":
+        return {value: 5, label: "May"}
+      case "06":
+        return {value: 6, label: "June"}
+      case "07":
+        return {value: 7, label: "July"}
+      case "08":
+        return {value: 8, label: "August"}
+      case "09":
+        return {value: 9, label: "September"}
+      case "10":
+        return {value: 10, label: "October"}
+      case "11":
+        return {value: 11, label: "November"}
+      case "11":
+        return {value: 12, label: "December"}
+    }
+  })
+  let [year, setYear] = useState(moment(initial).format("YYYY"))
   let [validDate, setValidDate] = useState(false)
 
   const padZeros = (number, length, pos) => {
@@ -19,9 +46,14 @@ const BirthdayInput = ({minimumAge}) => {
   }
 
   useEffect(() => {
-    let minimumBirthday = moment().subtract(minimumAge, "years").format("YYYY-MM-DD");
+    let minimumBirthday = moment().subtract(minimumAge || 0, "years").format("YYYY-MM-DD");
     let date = moment(`${year}-${padZeros(month.value, 2)}-${padZeros(day, 2)}`, "YYYY-MM-DD", true)
-    setValidDate(date.isBefore(minimumBirthday) && date.isValid())
+    
+    let dateIsValid = date.isBefore(minimumBirthday) && date.isValid()
+    setValidDate(dateIsValid)
+    if(dateIsValid){
+      callback(date.format("YYYY-MM-DD HH:mm:ss"))
+    }
   }, [day, month, year])
 
   const maxYear = moment().subtract(minimumAge, "years").format("YYYY")
