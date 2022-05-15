@@ -28,3 +28,18 @@ button:hover{
 nav{
   background-color: greenyellow;
 }
+nav > img {
+  max-height: 100px;
+}
+
+
+/*TEMP*/
+
+.edit-profile{
+  display: flex;
+  flex-direction: column;
+}
+.flex-row{
+  display: flex;
+  flex-direction: row;
+}
