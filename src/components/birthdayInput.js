@@ -51,9 +51,7 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
     
     let dateIsValid = date.isBefore(minimumBirthday) && date.isValid()
     setValidDate(dateIsValid)
-    if(dateIsValid){
-      callback(date.format("YYYY-MM-DD HH:mm:ss"))
-    }
+    callback(date.format("YYYY-MM-DD HH:mm:ss"), dateIsValid)
   }, [day, month, year])
 
   const maxYear = moment().subtract(minimumAge, "years").format("YYYY")

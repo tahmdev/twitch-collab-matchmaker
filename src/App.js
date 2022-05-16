@@ -6,10 +6,6 @@ import { Routes, Route, Link } from "react-router-dom";
 import Navbar from './components/navbar';
 import Profile from './routes/profile';
 
-// Profile
-// => gender should be radio buttons
-// => age should be number input with min & max
-// => tags, up to 10
 // Looking for
 // => Create profile of perfect partner
 // => Age should be a range
@@ -28,6 +24,9 @@ import Profile from './routes/profile';
 //      => If true: add both to websocket room + send notification 
 //      => else: check if user is on partners declined list
 //        => if false: add  user to partners match queue
+
+// Backend
+// Generate new sessionID until found one that is unique 
 
 function App() {
   let [auth, setAuth] = useState(() => {
