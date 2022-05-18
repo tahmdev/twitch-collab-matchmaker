@@ -1,0 +1,22 @@
+let tagList = [
+  {value: "Anime", label: "Anime"},
+  {value: "Art", label: "Art"},
+  {value: "ASMR", label: "ASMR"},
+  {value: "Casual", label: "Casual"},
+  {value: "Chill", label: "Chill"},
+  {value: "Competetive", label: "Competetive"},
+  {value: "DIY", label: "DIY"},
+  {value: "Educational", label: "Educational"},
+  {value: "Family Friendly", label: "Family Friendly"},
+  {value: "Fitness", label: "Fitness"},
+  {value: "Hype", label: "Hype"},
+  {value: "LGBTQIA+", label: "LGBTQIA+"},
+  {value: "Music", label: "Music"},
+  {value: "Programming", label: "Programming"},
+  {value: "Roleplaying", label: "Roleplaying"},
+  {value: "Speedrunning", label: "Speedrunning"},
+  {value: "Travel", label: "Travel"},
+  {value: "Voice Acting", label: "Voice Acting"},
+  {value: "Vtuber", label: "Vtuber"},
+]
+export default tagList

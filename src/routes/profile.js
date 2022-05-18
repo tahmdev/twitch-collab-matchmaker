@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import BirthdayInput from "../components/birthdayInput"
 import Select from 'react-select'
 import moment from "moment"
+import tagList from "../data/tagList"
 
 const Profile = ({auth}) => {
   let [edit, setEdit] = useState(false)
@@ -91,7 +92,7 @@ const Profile = ({auth}) => {
           options = {[
             {value: "Male", label: "Male"},
             {value: "Female", label: "Female"},
-            {value: "other", label: "Other"}
+            {value: "Other", label: "Other"}
           ]}
         />
       </label>
@@ -103,29 +104,9 @@ const Profile = ({auth}) => {
           value={tags}
           onChange={selected => setTags(selected)}
           isMulti={true}
+          closeMenuOnSelect={false}
           isOptionDisabled={() => tags.length >= 5}
-          options={[
-            {value: "Anime", label: "Anime"},
-            {value: "Art", label: "Art"},
-            {value: "ASMR", label: "ASMR"},
-            {value: "Casual", label: "Casual"},
-            {value: "Chill", label: "Chill"},
-            {value: "Competetive", label: "Competetive"},
-            {value: "DIY", label: "DIY"},
-            {value: "Educational", label: "Educational"},
-            {value: "Family Friendly", label: "Family Friendly"},
-            {value: "Fitness", label: "Fitness"},
-            {value: "Hype", label: "Hype"},
-            {value: "LGBTQIA+", label: "LGBTQIA+"},
-            {value: "Music", label: "Music"},
-            {value: "Programming", label: "Programming"},
-            {value: "Roleplaying", label: "Roleplaying"},
-            {value: "Speedrunning", label: "Speedrunning"},
-            {value: "Travel", label: "Travel"},
-            {value: "Voice Acting", label: "Voice Acting"},
-            {value: "Vtuber", label: "Vtuber"},
-
-          ]}
+          options={tagList}
         />
       </label>
       <button onClick={handleSave} disabled={!validDate}  > Save </button>
@@ -135,7 +116,7 @@ const Profile = ({auth}) => {
   return(
     <div>
       <button onClick={handleEdit} >Edit</button>
-      <p> Description: {description} </p>
+      <p className="linebreak" > {"Description:\n"} {description} </p>
       <p> Birthday: {moment(birthday).format("YYYY-MM-DD")} </p>
       <p> Gender: {gender} </p>
       <ul>
