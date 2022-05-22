@@ -23,6 +23,8 @@ const Match = ({auth}) => {
   }
 
   const handleInterested = (id) => {
+    fetch(`http://localhost:9000/match/setInterested/${auth.sessionID}/${matches[0].id}`, {method: "PUT"})
+    .then(() => setMatches(prev => prev.slice(1)))
 
   }
 

@@ -5,17 +5,11 @@ import { useState } from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import Navbar from './components/navbar';
 import Profile from './routes/profile';
+import Ideal from './routes/ideal';
+import Match from './routes/match';
 
-// Looking for
-// => Create profile of perfect partner
-// => Age should be a range
-// => Gender should be checkboxes
-// Settings
-// => Lightmode 
-// => Delte account
+// Clear matches on ideal change
 // Match
-// => Generate queue of matches
-//  => Age & gender should be exact matches, tags should be the more the better + allow mandatory tags
 // => On decline
 //  => add to declined list 
 // => On accept 
@@ -25,8 +19,14 @@ import Profile from './routes/profile';
 //      => else: check if user is on partners declined list
 //        => if false: add  user to partners match queue
 
+// Settings
+// => Lightmode 
+// => Delte account
+
 // Backend
-// Generate new sessionID until found one that is unique 
+// Generate new sessionID until found one that is unique
+// Also allow multiple sessionIDs
+// Create ideal entry on first login
 
 function App() {
   let [auth, setAuth] = useState(() => {
@@ -39,6 +39,8 @@ function App() {
       <Navbar auth={auth} />
       <Routes>
         <Route path="/profile" element={ <Profile auth={auth} /> } />
+        <Route path="/ideal" element={ <Ideal auth={auth} /> } />
+        <Route path="/match" element={ <Match auth={auth} /> } />
       </Routes>
     </div>
   );

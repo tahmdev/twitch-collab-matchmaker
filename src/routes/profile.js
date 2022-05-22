@@ -86,6 +86,7 @@ const Profile = ({auth}) => {
       <label>
         <span> Gender: </span>
         <Select
+          className="react-select"
           placeholder = "Select your gender"
           onChange={selected => setGender(selected.value)}
           value={{value: gender, label: gender}}
@@ -100,6 +101,7 @@ const Profile = ({auth}) => {
       <label>
         <span> Tags: </span>
         <Select 
+          className="react-select"
           placeholder="Select up to 5 tags"
           value={tags}
           onChange={selected => setTags(selected)}

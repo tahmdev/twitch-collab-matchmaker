@@ -65,6 +65,7 @@ const Ideal = ({auth}) => {
         <label>
           <span>Twitch Partner Status</span>
           <Select 
+            className="react-select"
             placeholder="Select all that apply"
             value={partnerStatus}
             onChange={selected => setPartnerStatus(selected)}
@@ -81,6 +82,7 @@ const Ideal = ({auth}) => {
         <label>
           <span>Gender: </span>
           <Select 
+            className="react-select"
             placeholder="Select all that apply"
             value={gender}
             onChange={selected => setGender(selected)}
@@ -107,6 +109,7 @@ const Ideal = ({auth}) => {
         <label>
           <span>Required Tags:</span>
           <Select 
+            className="react-select"
             placeholder="Select all that apply"
             value={requiredTags}
             onChange={selected => setRequiredTags(selected)}
@@ -119,6 +122,7 @@ const Ideal = ({auth}) => {
         <label>
           <span>Optional Tags:</span>
           <Select 
+            className="react-select"
             placeholder="Select all that apply"
             value={optionalTags}
             onChange={selected => setOptionalTags(selected)}
@@ -131,6 +135,7 @@ const Ideal = ({auth}) => {
         <label>
           <span>View Count</span>
           <Select 
+            className="react-select"
             placeholder="Select all that apply"
             value={viewCount}
             onChange={selected => setViewCount(selected)}

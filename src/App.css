@@ -1,6 +1,6 @@
 :root{
-  --bg-100: rgb(255, 255, 255);
-  --text-color: black;
+  --bg-100: black;
+  --text-color: white;
   --primary-color-50: rgb(38, 90, 233);
   --primary-color-100: rgb(57, 105, 240);
   --primary-color-300: rgb(67, 115, 240);
@@ -42,4 +42,17 @@ nav > img {
 .flex-row{
   display: flex;
   flex-direction: row;
+}
+.ideal-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.ideal-wrapper label{
+  display: block;
+}
+.linebreak{
+  white-space: pre-line;
+}
+.react-select{
+  color: black;
 }
