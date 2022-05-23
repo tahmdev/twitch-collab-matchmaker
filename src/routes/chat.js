@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import ChatWindow from "../components/chatWindow"
+import moment from "moment"
 
 const Chat = ({socket, auth}) => {
 
   let [chatPartners, setChatPartners] = useState()
   let [messages, setMessages] = useState()
   let currentChatRef = useRef()
+
   useEffect(() => {
     fetch(`http://localhost:9000/chat/getChats/${auth.sessionID}`)
     .then(res => res.json())
@@ -31,13 +33,17 @@ const Chat = ({socket, auth}) => {
   }
 
   const sendMessage = (content) => {
-    let msg = {
+    let data = {
       sessionID: auth.sessionID,
       partnerID: currentChatRef.current.id,
       content: content
     }
-    setMessages(prev => [...prev, msg])
-    socket.emit("sendMessage", msg)
+    setMessages(prev => [...prev, {
+      content: content,
+      sentBy: auth.id, 
+      sentDate: moment(new Date()).toISOString()
+    }])
+    socket.emit("sendMessage", data)
   }
 
   return(
