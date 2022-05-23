@@ -40,6 +40,9 @@ const Chat = ({socket, auth}) => {
     socket.emit("sendMessage", msg)
   }
 
+  return(
+    <div>
+      <button onClick={() => console.log(chatPartners)}>WWWW</button>
       { 
         chatPartners &&
         chatPartners.map(partner => {
@@ -50,5 +53,11 @@ const Chat = ({socket, auth}) => {
           )
         })
       }
+      {
+        currentChatRef.current &&
+        <ChatWindow socket={socket} sendMessage={sendMessage} messages={messages} partner={currentChatRef.current} />
+      }
+    </div>
+  )
 }
 export default Chat
