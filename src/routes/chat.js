@@ -13,12 +13,33 @@ const Chat = ({socket, auth}) => {
 
     socket.on("newMessage", msg => handleNewMessage(msg))
   }, [])
+
+  const handleNewMessage = (msg) => {
+    console.log(currentChatRef.current.id, msg.sentBy)
+    if(currentChatRef.current.id === msg.sentBy){
+      setMessages(prev => [...prev, msg])
+    }else{
+      console.log("new message from ", msg.sentBy)
+    }
+  }
+
   const openChat = (partner) => {
     fetch(`http://localhost:9000/chat/getHistory/${auth.sessionID}/${partner.id}`)
     .then(res => res.json())
     .then(json => setMessages(json))
     currentChatRef.current = partner
   }
+
+  const sendMessage = (content) => {
+    let msg = {
+      sessionID: auth.sessionID,
+      partnerID: currentChatRef.current.id,
+      content: content
+    }
+    setMessages(prev => [...prev, msg])
+    socket.emit("sendMessage", msg)
+  }
+
       { 
         chatPartners &&
         chatPartners.map(partner => {
