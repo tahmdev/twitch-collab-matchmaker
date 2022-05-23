@@ -1,4 +1,5 @@
 import { useState } from "react"
+import ChatMessage from "./chatMessage"
 
 const ChatWindow = ({socket, messages, sendMessage, partner}) => {
   let [currentInput, setCurrentInput] = useState("")
@@ -8,7 +9,12 @@ const ChatWindow = ({socket, messages, sendMessage, partner}) => {
       <h1>{partner.name}</h1>
       <ul>
       {messages &&
-        messages.map((msg, idx) => <li key={idx}> {msg.content} </li>)
+        messages.map((msg, idx) => <ChatMessage
+          key={idx}
+          content={msg.content}
+          sentBy={msg.sentBy}
+          date={msg.sentDate}
+        />)
       }
       </ul>
 
