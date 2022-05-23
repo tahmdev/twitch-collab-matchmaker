@@ -36,6 +36,15 @@ function App() {
     if (cookie) return JSON.parse(cookie)
     else return null
   })
+
+  useEffect(() => {
+    socket.on("getUser", () => {
+      if(auth){
+        socket.emit("auth", auth.sessionID)
+      }
+    })
+  }, [])
+
   return (
     <div className="App">
       <Navbar auth={auth} />
