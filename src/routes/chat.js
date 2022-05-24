@@ -6,19 +6,23 @@ const Chat = ({socket, auth}) => {
 
   let [chatPartners, setChatPartners] = useState()
   let [messages, setMessages] = useState()
-  let currentChatRef = useRef()
+  let [currentChat, setCurrentChat] = useState()
 
   useEffect(() => {
     fetch(`http://localhost:9000/chat/getChats/${auth.sessionID}`)
     .then(res => res.json())
     .then(json => setChatPartners(json))
-
-    socket.on("newMessage", msg => handleNewMessage(msg))
   }, [])
 
+  useEffect(() => {
+    console.log(socket)
+    if(currentChat) console.log("BBBBB" + currentChat.id)
+    socket.off("newMessage")
+    socket.on("newMessage", msg => handleNewMessage(msg))
+  }, [currentChat])
+
   const handleNewMessage = (msg) => {
-    console.log(currentChatRef.current.id, msg.sentBy)
-    if(currentChatRef.current.id === msg.sentBy){
+    if(currentChat.id === msg.sentBy){
       setMessages(prev => [...prev, msg])
     }else{
       console.log("new message from ", msg.sentBy)
@@ -29,13 +33,13 @@ const Chat = ({socket, auth}) => {
     fetch(`http://localhost:9000/chat/getHistory/${auth.sessionID}/${partner.id}`)
     .then(res => res.json())
     .then(json => setMessages(json))
-    currentChatRef.current = partner
+    setCurrentChat(partner)
   }
 
   const sendMessage = (content) => {
     let data = {
       sessionID: auth.sessionID,
-      partnerID: currentChatRef.current.id,
+      partnerID: currentChat.id,
       content: content
     }
     setMessages(prev => [...prev, {
@@ -47,21 +51,34 @@ const Chat = ({socket, auth}) => {
   }
 
   return(
-    <div>
-      <button onClick={() => console.log(chatPartners)}>WWWW</button>
-      { 
-        chatPartners &&
-        chatPartners.map(partner => {
-          return(
-            <button key={partner.id} onClick={() => openChat(partner)}>
-              {partner.name}
-            </button>
-          )
-        })
-      }
+    <div className="chat-wrapper">
+      <div className="flex-column">
+        <ul>
+          { 
+            chatPartners &&
+            chatPartners.map(partner => {
+              return(
+                <li key={partner.id} >
+                  <button className="open-chat-btn" key={partner.id} onClick={() => openChat(partner)}>
+                    <img src={partner.profilePicture} />
+                    <span> {partner.name} </span>
+                  </button>
+                </li>
+              )
+            })
+          }
+        </ul>
+
+      </div>
       {
-        currentChatRef.current &&
-        <ChatWindow socket={socket} sendMessage={sendMessage} messages={messages} partner={currentChatRef.current} />
+        currentChat &&
+        <ChatWindow 
+          sendMessage={sendMessage} 
+          messages={messages} 
+          partner={currentChat} 
+          handleBack={handleBack}
+          currentChat={currentChat}
+        />
       }
     </div>
   )
