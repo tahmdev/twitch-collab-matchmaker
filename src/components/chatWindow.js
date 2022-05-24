@@ -4,6 +4,11 @@ import ChatMessage from "./chatMessage"
 const ChatWindow = ({messages, sendMessage, partner, handleBack}) => {
   let [currentInput, setCurrentInput] = useState("")
 
+  const handleSend = () => {
+    sendMessage(currentInput)
+    setCurrentInput("")
+  }
+
   return(
     <div className="chat-window" >
       <div className="chat-header" >
