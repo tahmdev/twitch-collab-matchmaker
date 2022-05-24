@@ -6,7 +6,7 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
 
   const resizeTextarea = () => {
     let el = document.getElementById("chat-textarea")
-    el.style.height = `Calc(1.2rem)`
+    el.style.height = `1.2rem`
     el.style.height = `Calc(${el.scrollHeight}px - 1rem)`
   }
 
@@ -19,6 +19,7 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   const handleSend = () => {
     sendMessage(currentInput)
     setCurrentInput("")
+    document.getElementById("chat-textarea").style.height = "1.2rem"
   }
 
   return(
