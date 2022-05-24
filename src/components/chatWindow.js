@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import ChatMessage from "./chatMessage"
+import moment from "moment"
 
 const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   let [currentInput, setCurrentInput] = useState("")
@@ -31,16 +32,29 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
       </div>
       
       <div className="chat-messages" >
-        <ul>
         {messages &&
-          messages.map((msg, idx) => <ChatMessage
-            key={idx}
-            content={msg.content}
-            sentBy={msg.sentBy}
-            date={msg.sentDate}
-          />)
+          messages.map((msg, idx, arr) => {
+            let renderDate
+            if (idx === 0 || moment(`${msg.sentDate}`).format("DD MMMM YYYY") !==
+                moment(`${arr[idx - 1].sentDate}`).format("DD MMMM YYYY")) renderDate = true
+            return(
+              <>
+                { renderDate &&
+                  <div className="message-date">
+                    {moment(`${msg.sentDate}`).format("DD MMMM YYYY")}
+                  </div>
+                }
+                <ChatMessage
+                  key={idx}
+                  content={msg.content}
+                  sentBy={msg.sentBy}
+                  date={msg.sentDate}
+                  auth={auth}
+                />
+              </>
+            )
+          })
         }
-        </ul>
       </div>
 
       <div className="chat-input" >
