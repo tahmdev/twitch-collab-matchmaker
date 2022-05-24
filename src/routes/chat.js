@@ -77,7 +77,6 @@ const Chat = ({socket, auth}) => {
           messages={messages} 
           partner={currentChat} 
           handleBack={handleBack}
-          currentChat={currentChat}
         />
       }
     </div>
