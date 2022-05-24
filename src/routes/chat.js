@@ -50,6 +50,10 @@ const Chat = ({socket, auth}) => {
     socket.emit("sendMessage", data)
   }
 
+  const handleBack = () => {
+    setCurrentChat(null)
+  }
+
   return(
     <div className="chat-wrapper">
       <div className="flex-column">
