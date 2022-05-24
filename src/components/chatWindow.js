@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import ChatMessage from "./chatMessage"
 
-const ChatWindow = ({messages, sendMessage, partner, handleBack}) => {
+const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   let [currentInput, setCurrentInput] = useState("")
 
   const resizeTextarea = () => {
