@@ -56,7 +56,7 @@ const Chat = ({socket, auth}) => {
 
   return(
     <div className="chat-wrapper">
-      <div className="container flex-row">
+      <div className="container--full-width flex-row ">
         <div className="flex-column">
           <ul>
             { 

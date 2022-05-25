@@ -3,6 +3,7 @@
 }
 :root{
   --bg-100: white;
+  --bg-200: rgb(252, 252, 252);
   --bg-300: rgb(218, 218, 218);
   --text-color: black;
   --border-color: rgba(0, 0, 0, 0.493);
@@ -67,15 +68,23 @@ nav > img {
   display: flex;
   flex-direction: column;
 }
-.flex-column > * {
-  flex: 1 1 auto;
-}
 .flex-row{
   display: flex;
   flex-direction: row;
 }
-.flex-row > * {
-  flex: 1 1 auto;
+.flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.split{
+  display: flex;
+}
+.split > *{
+  flex-basis: 100%;
+}
+.split > * + *{
+  margin-left: 1rem;
 }
 .trans-btn{
   color: var(--text-color);
@@ -84,9 +93,18 @@ nav > img {
   outline: none;
 }
 .container{
+  width: 95%;
+  max-width: 1000px;
+}
+.container--full-width{
   width: 100%;
   max-width: 1000px;
 }
+.container--small{
+  width: 95%;
+  max-width: 350px;
+}
+
 
 
 /*Chat*/
@@ -95,6 +113,9 @@ nav > img {
   height: 100%;
   display: flex;
   justify-content: center;
+}
+.chat-wrapper .flex-column{
+  flex: 1 1 auto;
 }
 .chat-wrapper ul{
   list-style: none;
@@ -184,7 +205,7 @@ nav > img {
   display: flex;
   height: fit-content;
   width: 80%;
-
+  margin-right: 0;
 }
 .chat-text-container textarea{
   resize: none;
@@ -235,6 +256,7 @@ nav > img {
   padding: 0 1rem 0 1.3rem;
 }
 
+
 /*ChatMessage*/
 .chat-messages{
   display: flex;
@@ -272,4 +294,53 @@ nav > img {
   background-color: var(--primary-color-200);
   color: white;
   align-self: flex-end;
+}
+
+
+/*Profile*/
+.profile-wrapper{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+.profile{
+  height: fit-content;
+  border-radius: 10px;
+}
+@media (min-width: 420px){
+  .profile{
+    margin: 1.2rem 0;
+    background-color: var(--bg-200);
+    box-shadow: 2px 2px 6px 4px rgba(0, 0, 0, 0.432);
+  }
+}
+.profile > * {
+  margin: 1rem;
+}
+.profile > .flex-row{
+  justify-content: space-between;
+}
+.profile h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+.profile p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.profile img {
+  max-width: 50%;
+  height: 50%;
+}
+.tags > ul{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+.tags > ul > li{
+  margin: 0.3rem 0.3rem;
+  padding: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
 }
