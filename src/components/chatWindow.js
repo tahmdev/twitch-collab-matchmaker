@@ -1,9 +1,23 @@
 import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ChatMessage from "./chatMessage"
 import moment from "moment"
 
 const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   let [currentInput, setCurrentInput] = useState("")
+  let chatMessagesRef = useRef()
+  let prevPartner = useRef()
+  useEffect(() => {
+    let el = chatMessagesRef.current
+    prevMessagesHeight.current = el.clientHeight
+    if(prevPartner.current !== partner && messages){
+      prevPartner.current = partner
+      el.scrollTo(0, el.scrollHeight)
+    }
+    else if(el && el.scrollHeight - el.clientHeight + 25 < el.scrollTop + el.clientHeight){
+      el.scrollTo(0, el.scrollHeight)
+    }
+  }, [messages])
 
   const resizeTextarea = () => {
     let el = document.getElementById("chat-textarea")
@@ -27,11 +41,15 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
     <div className="chat-window" >
       <div className="chat-header" >
         <button onClick={handleBack}>Back</button>
-        <img src={partner.profilePicture} />
-        <h1>{partner.name}</h1>
+        <div className="partner-info" >
+          <img src={partner.profilePicture} />
+          <h1>{partner.name}</h1>
+        </div>
+        <button>Settings</button>
       </div>
       
       <div className="chat-messages" >
+      <div className="chat-messages" ref={chatMessagesRef} >
         {messages &&
           messages.map((msg, idx, arr) => {
             let renderDate
