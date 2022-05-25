@@ -4,6 +4,9 @@ import moment from "moment"
 
 const Chat = ({socket, auth}) => {
 
+  // On send and load scroll to bottom
+  // Add desktop styling
+  // Add fontawesome
   let [chatPartners, setChatPartners] = useState()
   let [messages, setMessages] = useState()
   let [currentChat, setCurrentChat] = useState()
@@ -52,6 +55,7 @@ const Chat = ({socket, auth}) => {
 
   const handleBack = () => {
     setCurrentChat(null)
+    setMessages(null)
   }
 
   return(
