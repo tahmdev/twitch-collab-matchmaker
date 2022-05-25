@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import ChatMessage from "./chatMessage"
 import moment from "moment"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 
 const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   let [currentInput, setCurrentInput] = useState("")
@@ -25,7 +27,7 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
     let currentMessages = chatMessagesRef.current
     el.style.height = `1.2rem`
     el.style.height = `Calc(${el.scrollHeight}px - 1rem)`
-    
+
     if(prevMessagesHeight.current !== currentMessages.clientHeight){
       let heightChange = currentMessages.clientHeight - prevMessagesHeight.current
       currentMessages.scrollTo(0, currentMessages.scrollTop - heightChange)
@@ -48,12 +50,16 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   return(
     <div className="chat-window" >
       <div className="chat-header" >
-        <button onClick={handleBack}>Back</button>
+        <button className="trans-btn chat-back-btn" onClick={handleBack} aria-label="Close chat">
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
         <div className="partner-info" >
           <img src={partner.profilePicture} />
           <h1>{partner.name}</h1>
         </div>
-        <button>Settings</button>
+        <button className="trans-btn chat-settings-btn" aria-label="Settings">
+          <FontAwesomeIcon icon={faEllipsisV} />
+        </button>
       </div>
       
       <div className="chat-messages" ref={chatMessagesRef} >
@@ -91,7 +97,9 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
             placeholder={`Message`}
           />
         </div>
-        <button onClick={handleSend}>Send</button>
+        <button className="send-message-btn" onClick={handleSend} aria-label="Send message">
+          <FontAwesomeIcon icon={faPaperPlane} />
+        </button>
       </div>
     </div>
   )
