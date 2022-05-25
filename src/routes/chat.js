@@ -3,10 +3,6 @@ import ChatWindow from "../components/chatWindow"
 import moment from "moment"
 
 const Chat = ({socket, auth}) => {
-
-  // On send and load scroll to bottom
-  // Add desktop styling
-  // Add fontawesome
   let [chatPartners, setChatPartners] = useState()
   let [messages, setMessages] = useState()
   let [currentChat, setCurrentChat] = useState()
@@ -60,34 +56,36 @@ const Chat = ({socket, auth}) => {
 
   return(
     <div className="chat-wrapper">
-      <div className="flex-column">
-        <ul>
-          { 
-            chatPartners &&
-            chatPartners.map(partner => {
-              return(
-                <li key={partner.id} >
-                  <button className="open-chat-btn" key={partner.id} onClick={() => openChat(partner)}>
-                    <img src={partner.profilePicture} />
-                    <span> {partner.name} </span>
-                  </button>
-                </li>
-              )
-            })
-          }
-        </ul>
-
+      <div className="container flex-row">
+        <div className="flex-column">
+          <ul>
+            { 
+              chatPartners &&
+              chatPartners.map(partner => {
+                return(
+                  <li key={partner.id} >
+                    <button className="open-chat-btn" key={partner.id} onClick={() => openChat(partner)}>
+                      <img src={partner.profilePicture} />
+                      <span> {partner.name} </span>
+                    </button>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+        {
+          currentChat &&
+          <ChatWindow 
+            sendMessage={sendMessage} 
+            messages={messages} 
+            partner={currentChat} 
+            handleBack={handleBack}
+            auth={auth}
+          />
+        }
       </div>
-      {
-        currentChat &&
-        <ChatWindow 
-          sendMessage={sendMessage} 
-          messages={messages} 
-          partner={currentChat} 
-          handleBack={handleBack}
-          auth={auth}
-        />
-      }
+      
     </div>
   )
 }
