@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { useEffect, useRef, useState } from "react"
 import ChatMessage from "./chatMessage"
 import moment from "moment"
@@ -7,6 +6,8 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   let [currentInput, setCurrentInput] = useState("")
   let chatMessagesRef = useRef()
   let prevPartner = useRef()
+  let prevMessagesHeight = useRef()
+
   useEffect(() => {
     let el = chatMessagesRef.current
     prevMessagesHeight.current = el.clientHeight
@@ -21,8 +22,15 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
 
   const resizeTextarea = () => {
     let el = document.getElementById("chat-textarea")
+    let currentMessages = chatMessagesRef.current
     el.style.height = `1.2rem`
     el.style.height = `Calc(${el.scrollHeight}px - 1rem)`
+    
+    if(prevMessagesHeight.current !== currentMessages.clientHeight){
+      let heightChange = currentMessages.clientHeight - prevMessagesHeight.current
+      currentMessages.scrollTo(0, currentMessages.scrollTop - heightChange)
+      prevMessagesHeight.current = currentMessages.clientHeight
+    }
   }
 
   useEffect(() => {
@@ -48,7 +56,6 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
         <button>Settings</button>
       </div>
       
-      <div className="chat-messages" >
       <div className="chat-messages" ref={chatMessagesRef} >
         {messages &&
           messages.map((msg, idx, arr) => {
