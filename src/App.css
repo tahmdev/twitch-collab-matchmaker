@@ -10,6 +10,7 @@
   --primary-color-100: rgb(195, 155, 254);
   --primary-color-200: rgb(144, 89, 231);
   --primary-color-300: rgb(117,46,228);
+  --primary-color-400: rgb(106, 39, 214);
 }
 html, body, #root, .App {
   color: var(--text-color);
@@ -86,12 +87,6 @@ nav > img {
 .split > * + *{
   margin-left: 1rem;
 }
-.trans-btn{
-  color: var(--text-color);
-  background-color: transparent;
-  border: none;
-  outline: none;
-}
 .container{
   width: 95%;
   max-width: 1000px;
@@ -104,8 +99,40 @@ nav > img {
   width: 95%;
   max-width: 350px;
 }
-
-
+.trans-btn{
+  color: var(--text-color);
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.primary-btn,
+.secondary-btn{
+  padding: 0.6rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  transition: 130ms ease-in-out;
+}
+.primary-btn{
+  color: white;
+  background-color: var(--primary-color-300);
+}
+.secondary-btn{
+  color: var(--text-color);
+  background-color: transparent;
+  border: 2px solid var(--primary-color-300);
+}
+.primary-btn:hover,
+.secondary-btn:hover{
+  transform: translateY(1px);
+}
+.primary-btn:hover{
+  background-color: var(--primary-color-400);
+}
+.secondary-btn:hover{
+  background-color: var(--primary-color-300);
+  color: white;
+}
 
 /*Chat*/
 .chat-wrapper{
@@ -305,13 +332,13 @@ nav > img {
 }
 .profile{
   height: fit-content;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 @media (min-width: 420px){
   .profile{
     margin: 1.2rem 0;
     background-color: var(--bg-200);
-    box-shadow: 2px 2px 6px 4px rgba(0, 0, 0, 0.432);
+    box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.432);
   }
 }
 .profile > * {
@@ -323,6 +350,11 @@ nav > img {
 .profile h1 {
   font-size: 1.4rem;
   margin: 0;
+}
+.edit-profile-btn > *{
+  font-size: 1.2rem;
+  color: var(--text-color);
+  opacity: 0.5;
 }
 .profile p {
   margin-top: 0;
@@ -343,4 +375,30 @@ nav > img {
   padding: 0.3rem;
   border-radius: 6px;
   border: 1px solid var(--border-color);
+}
+.edit-profile textarea{
+  resize: none;
+  width: calc(100% - 2rem);
+  overflow: auto;
+  height: 10rem;
+  border-radius: 5px;
+  border: none;
+  outline: 1px solid var(--border-color);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0 1rem;
+}
+
+.birthday-input > * + *{
+  margin-left: 1rem;
+}
+.days{
+  flex: 0 1 18%
+}
+.months{
+  flex: 0 1 35%
+}
+.birthday-select__indicators{
+  display: none;
+  visibility: hidden;
+  width: 0px;
 }
