@@ -3,6 +3,8 @@ import BirthdayInput from "../components/birthdayInput"
 import Select from 'react-select'
 import moment from "moment"
 import tagList from "../data/tagList"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 const Profile = ({auth}) => {
   let [edit, setEdit] = useState(false)
@@ -116,8 +118,10 @@ const Profile = ({auth}) => {
             options={tagList}
           />
         </label>
-        <button onClick={handleSave} disabled={!validDate}  > Save </button>
-        <button onClick={handleCancel} > Cancel </button>
+        <div className="split">
+          <button className="secondary-btn" onClick={handleCancel} > Cancel </button>
+          <button className="primary-btn" onClick={handleSave} disabled={!validDate}  > Save </button>
+        </div>
       </div>
     </div>
   )
@@ -126,7 +130,9 @@ const Profile = ({auth}) => {
       <div className="container--small profile">
         <div className="flex-row">
           <h1> {auth.name} </h1>
-          <button onClick={handleEdit} >Edit</button>
+          <button className="trans-btn edit-profile-btn" onClick={handleEdit} aria-label="Edit profile" >
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </button>
         </div>
         <div className="split">
           <img src={auth.profilePicture} />
