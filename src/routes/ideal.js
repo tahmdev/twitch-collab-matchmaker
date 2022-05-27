@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react"
 import Select from 'react-select'
-import moment from "moment"
 import MultiRange from "../components/multiRange"
 import tagList from "../data/tagList"
 const Ideal = ({auth}) => {
   let [isLoading, setIsLoading] = useState(true)
   let [partnerStatus, setPartnerStatus] = useState([])
   let [gender, setGender] = useState([])
-  let [minAge, setMinAge] = useState(21)
-  let [maxAge, setMaxAge] = useState(110)
+  let [minAge, setMinAge] = useState(13)
+  let [maxAge, setMaxAge] = useState(100)
   let [optionalTags, setOptionalTags] = useState([])
   let [requiredTags, setRequiredTags] = useState([])
   let [viewCount, setViewCount] = useState([])
   let [invalidInput, setInvalidInput] = useState(false)
-
-  // Tags up to 5 nessecary, up to 5 nice to have
-  // viewcount, more than me, less than me, around my level
-  // 
 
   //Get initial state from db
   useEffect(() => {
@@ -33,6 +28,7 @@ const Ideal = ({auth}) => {
       setIsLoading(false)
     })
   }, [])
+
   const handleSubmit = e => {
     e.preventDefault()
     if(requiredTags.length === 0 && optionalTags.length === 0){
@@ -69,40 +65,43 @@ const Ideal = ({auth}) => {
 
   return(
     <div className="ideal-wrapper" >
-      <form onSubmit={handleSubmit} >
-        <label>
-          <span>Twitch Partner Status</span>
-          <Select 
-            className="react-select"
-            placeholder="Select all that apply"
-            value={partnerStatus}
-            onChange={selected => setPartnerStatus(selected)}
-            isMulti={true}
-            closeMenuOnSelect={false}
-            options={[
-              {value: "Partner", label: "Partner"},
-              {value: "Affiliate", label: "Affiliate"},
-              {value: "None", label: "None"},
-            ]}
-          />
-        </label>
+      <div className="container--small ideal">
+        <form onSubmit={handleSubmit} >
+          <label>
+            <span>Twitch Partner Status:</span>
+            <Select 
+              styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
+              className="react-select"
+              placeholder="Select all that apply"
+              value={partnerStatus}
+              onChange={selected => setPartnerStatus(selected)}
+              isMulti={true}
+              closeMenuOnSelect={false}
+              options={[
+                {value: "Partner", label: "Partner"},
+                {value: "Affiliate", label: "Affiliate"},
+                {value: "None", label: "None"},
+              ]}
+            />
+          </label>
 
-        <label>
-          <span>Gender: </span>
-          <Select 
-            className="react-select"
-            placeholder="Select all that apply"
-            value={gender}
-            onChange={selected => setGender(selected)}
-            isMulti={true}
-            closeMenuOnSelect={false}
-            options={[
-              {value: "Male", label: "Male"},
-              {value: "Female", label: "Female"},
-              {value: "Other", label: "Other"},
-            ]}
-          />
-        </label>
+          <label >
+            <span>Gender: </span>
+            <Select 
+              styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
+              className="react-select"
+              placeholder="Select all that apply"
+              value={gender}
+              onChange={selected => setGender(selected)}
+              isMulti={true}
+              closeMenuOnSelect={false}
+              options={[
+                {value: "Male", label: "Male"},
+                {value: "Female", label: "Female"},
+                {value: "Other", label: "Other"},
+              ]}
+            />
+          </label>
 
           {!isLoading &&
           <div className="ideal-age-wrapper">
@@ -117,56 +116,55 @@ const Ideal = ({auth}) => {
             />
           </div>
 
-        <label>
-          <span>Maxmimum Age:</span>
-          <input type="number" min={13} max={120} value={maxAge} onChange={e => setMaxAge(e.target.value)}/>
-        </label>
+          }
 
-        <label>
-          <span>Required Tags:</span>
-          <Select 
-            className="react-select"
-            placeholder="Select all that apply"
-            value={requiredTags}
-            onChange={selected => setRequiredTags(selected)}
-            isMulti={true}
-            closeMenuOnSelect={false}
-            options={tagList}
-          />
-        </label>
+          <label>
+            <span>Required Tags:</span>
+            <Select 
+              className="react-select"
+              placeholder="Select all that apply"
+              value={requiredTags}
+              onChange={selected => setRequiredTags(selected)}
+              isMulti={true}
+              closeMenuOnSelect={false}
+              options={tagList}
+            />
+          </label>
 
-        <label>
-          <span>Optional Tags:</span>
-          <Select 
-            className="react-select"
-            placeholder="Select all that apply"
-            value={optionalTags}
-            onChange={selected => setOptionalTags(selected)}
-            isMulti={true}
-            closeMenuOnSelect={false}
-            options={tagList}
-          />
-        </label>
+          <label>
+            <span>Optional Tags:</span>
+            <Select 
+              className="react-select"
+              placeholder="Select all that apply"
+              value={optionalTags}
+              onChange={selected => setOptionalTags(selected)}
+              isMulti={true}
+              closeMenuOnSelect={false}
+              options={tagList}
+            />
+          </label>
 
-        <label>
-          <span>View Count</span>
-          <Select 
-            className="react-select"
-            placeholder="Select all that apply"
-            value={viewCount}
-            onChange={selected => setViewCount(selected)}
-            isMulti={true}
-            closeMenuOnSelect={false}
-            options={[
-              {value: "More than me", label: "More than me"},
-              {value: "Same as me", label: "Same as me"},
-              {value: "Less than me", label: "Less than me"},
-            ]}
-          />
-        </label>
-        {invalidInput && <p>Please select at least one optional or required tag</p>}
-        <button type="submit" >Save</button>
-      </form>
+          <label>
+            <span>View Count</span>
+            <Select 
+              className="react-select"
+              placeholder="Select all that apply"
+              value={viewCount}
+              onChange={selected => setViewCount(selected)}
+              isMulti={true}
+              closeMenuOnSelect={false}
+              options={[
+                {value: "More than me", label: "More than me"},
+                {value: "Same as me", label: "Same as me"},
+                {value: "Less than me", label: "Less than me"},
+              ]}
+            />
+          </label>
+          {invalidInput && <p>Please select at least one optional or required tag</p>}
+          <button type="submit" >Save</button>
+        </form>
+      </div>
+      
     </div>
   )
 }
