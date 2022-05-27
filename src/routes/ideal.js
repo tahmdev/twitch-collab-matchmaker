@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import Select from 'react-select'
 import moment from "moment"
+import MultiRange from "../components/multiRange"
 import tagList from "../data/tagList"
 const Ideal = ({auth}) => {
+  let [isLoading, setIsLoading] = useState(true)
   let [partnerStatus, setPartnerStatus] = useState([])
   let [gender, setGender] = useState([])
   let [minAge, setMinAge] = useState(21)
@@ -28,6 +30,7 @@ const Ideal = ({auth}) => {
       setOptionalTags(JSON.parse(json[0].optionaltags).map(i => {return {value: i, label: i } }))
       setRequiredTags(JSON.parse(json[0].requiredtags).map(i => {return {value: i, label: i } }))
       setViewCount(JSON.parse(json[0].viewcount).map(i => {return {value: i, label: i } }))
+      setIsLoading(false)
     })
   }, [])
   const handleSubmit = e => {
@@ -58,6 +61,11 @@ const Ideal = ({auth}) => {
       setInvalidInput(false)
     }
   }, [requiredTags, optionalTags])
+
+  const handleAge = (min, max) => {
+    setMinAge(min)
+    setMaxAge(max)
+  }
 
   return(
     <div className="ideal-wrapper" >
@@ -96,10 +104,18 @@ const Ideal = ({auth}) => {
           />
         </label>
 
-        <label>
-          <span>Minimum Age:</span>
-          <input type="number" min={13} max={120} value={minAge} onChange={e => setMinAge(e.target.value)} />
-        </label>
+          {!isLoading &&
+          <div className="ideal-age-wrapper">
+            <label htmlFor="age-input" >Age:</label>
+            <MultiRange
+              id="age-input"
+              min={13}
+              max={100}
+              minVal={minAge}
+              maxVal={maxAge}
+              onChange={handleAge}
+            />
+          </div>
 
         <label>
           <span>Maxmimum Age:</span>
