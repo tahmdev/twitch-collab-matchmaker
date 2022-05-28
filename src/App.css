@@ -438,10 +438,13 @@ nav > img {
 .match-wrapper{
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 }
 .match{
+  z-index: 51;
   height: fit-content;
   border-radius: 8px;
+  background-color: white;
 }
 @media (min-width: 420px){
   .match{
@@ -457,6 +460,16 @@ nav > img {
 .match > * {
   margin: 1rem;
 }
+.match * {
+  pointer-events: none;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently */
+
+}
 .match img{
   aspect-ratio: 1 / 1;
   max-width: 50%;
@@ -464,6 +477,45 @@ nav > img {
 }
 .match p{
   margin-top: 0;
+}
+.match-btn-container{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+#not-interested-icon,
+#interested-icon,
+#under-interested-icon,
+#under-not-interested-icon {
+  padding: 0.5rem;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+  position: absolute;
+  font-size: 4rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#interested-icon{
+  opacity: 0;
+  color: greenyellow;
+  left: 0%;
+}
+#under-interested-icon{
+  opacity: 0.15;
+  color: var(--text-color);
+  left: 0%;
+}
+#not-interested-icon{
+  opacity: 0;
+  color: red;
+  right: 0%;
+}
+#under-not-interested-icon{
+  opacity: 0.15;
+  color: var(--text-color);
+  right: 0%;
 }
 
 
