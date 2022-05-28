@@ -43,11 +43,39 @@ const Match = ({auth}) => {
   }
 
   return(
-    <div>
-       {matches[0].name}
-       <button onClick={() => handleNotInterested(matches[0].id)}>Not interested</button>
-       <button onClick={() => console.log(matches)} >log</button>
-       <button onClick={() => handleInterested(matches[0].id)}>Interested</button>
+    <div className="match-wrapper" >
+      <div className="container--small match">
+        <div>
+          <h1> {matches[0].name} </h1>
+        </div>
+        <div className="split">
+          <img src={matches[0].profilePicture} />
+          <div className="flex-column">
+            <p> Gender: {matches[0].gender} </p>
+            <p> Age: {matches[0].age} </p>
+            <p> Viewers: {matches[0].viewCount} </p>
+          </div>
+        </div>
+        <div className="about-me">
+          <h2>About me:</h2>
+          <p className="linebreak" > {matches[0].description} </p>
+        </div>
+
+        <div className="tags">
+          <h3>Tags:</h3>
+          <ul>
+            { 
+              JSON.parse(matches[0].tags).map(i => <li key={i}>{i}</li>)
+            }
+          </ul>
+        </div>
+
+        <button onClick={() => handleNotInterested(matches[0].id)}>Not interested</button>
+        <button onClick={() => console.log(matches)} >log</button>
+        <button onClick={() => handleInterested(matches[0].id)}>Interested</button>
+      </div>
+      
+       
     </div>
   )
 }
