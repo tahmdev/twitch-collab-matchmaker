@@ -51,34 +51,35 @@ const Match = ({auth}) => {
   }
 
   const handleDragEnd = (e) => {
-    matchRef.current.style.transition = "all 150ms ease-in-out"
-    
-    if(e.pageX - initialPos.current >= 130){
-      matchRef.current.style.transform = `translateX(${window.innerWidth}px)`
-      setTimeout(() => {
-        //handleInterested()
-        matchRef.current.style.transition = "all 0ms ease-in-out"
-        matchRef.current.style.transform = `translateX(${-window.innerWidth}px)`
-        setTimeout(() => {
-          matchRef.current.style.transition = "all 150ms ease-in-out"
-          matchRef.current.style.transform = `translateX(${0}px)`
-        }, 15);
-      }, 150);
-
-    }else if(e.pageX - initialPos.current <= -130){
-      matchRef.current.style.transform = `translateX(${-window.innerWidth}px)`
-      setTimeout(() => {
-        //handleNotInterested()
-        matchRef.current.style.transition = "all 0ms ease-in-out"
+    if(dragging){
+      matchRef.current.style.transition = "all 150ms ease-in-out"
+      if(e.pageX - initialPos.current >= 130){
         matchRef.current.style.transform = `translateX(${window.innerWidth}px)`
         setTimeout(() => {
-          matchRef.current.style.transition = "all 150ms ease-in-out"
-          matchRef.current.style.transform = `translateX(${0}px)`
-        }, 15);
-      }, 150);
-    }else{
-      matchRef.current.style.transform = `translateX(${0}px)`
+          //handleInterested()
+          matchRef.current.style.transition = "all 0ms ease-in-out"
+          matchRef.current.style.transform = `translateX(${-window.innerWidth}px)`
+          setTimeout(() => {
+            matchRef.current.style.transition = "all 150ms ease-in-out"
+            matchRef.current.style.transform = `translateX(${0}px)`
+          }, 15);
+        }, 150);
+      }else if(e.pageX - initialPos.current <= -130){
+        matchRef.current.style.transform = `translateX(${-window.innerWidth}px)`
+        setTimeout(() => {
+          //handleNotInterested()
+          matchRef.current.style.transition = "all 0ms ease-in-out"
+          matchRef.current.style.transform = `translateX(${window.innerWidth}px)`
+          setTimeout(() => {
+            matchRef.current.style.transition = "all 150ms ease-in-out"
+            matchRef.current.style.transform = `translateX(${0}px)`
+          }, 15);
+        }, 150);
+      }else{
+        matchRef.current.style.transform = `translateX(${0}px)`
+      }
     }
+    
     setDragging(false)
   }
 
@@ -93,6 +94,8 @@ const Match = ({auth}) => {
   useEventListener("touchstart", handleTouchStart, matchRef, matchRef.current !== undefined)
   useEventListener("touchmove", handleTouchMove, document, matchRef.current !== undefined)
   useEventListener("touchend", handleTouchEnd, document, matchRef.current !== undefined)
+
+
 
   if(matches.length === 0){
     return(
