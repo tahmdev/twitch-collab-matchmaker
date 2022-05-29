@@ -483,18 +483,25 @@ nav > img {
   justify-content: center;
   margin: auto;
 }
+
+
 #not-interested-icon,
 #interested-icon,
 #under-interested-icon,
-#under-not-interested-icon {
-  padding: 0.5rem;
-  border-radius: 50%;
+#under-not-interested-icon,
+.match-btn-container > .trans-btn {
   aspect-ratio: 1 / 1;
   z-index: 1;
   position: absolute;
   font-size: 4rem;
   top: 50%;
   transform: translateY(-50%);
+}
+.match-btn-container > .trans-btn{
+  z-index: 10;
+}
+.interested-btn{
+  left:0%
 }
 #interested-icon{
   opacity: 0;
@@ -506,6 +513,9 @@ nav > img {
   color: var(--text-color);
   left: 0%;
 }
+.not-interested-btn{
+  right:0%
+}
 #not-interested-icon{
   opacity: 0;
   color: red;
@@ -515,6 +525,26 @@ nav > img {
   opacity: 0.15;
   color: var(--text-color);
   right: 0%;
+}
+@media (min-width: 1024px){
+  .interested-btn,
+  #under-interested-icon{
+    font-size: 5rem;
+    left: -25%;
+  }
+  .not-interested-btn,
+  #under-not-interested-icon{
+    font-size: 5rem;
+    right: -25%;
+  }
+  #interested-icon,
+  #not-interested-icon{
+    font-size: 5rem;
+  }
+  .interested-btn:hover > *,
+  .not-interested-btn:hover > *{
+    opacity: 1 !important;
+  }
 }
 
 
