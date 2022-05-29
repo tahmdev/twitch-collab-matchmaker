@@ -111,14 +111,20 @@ button:hover{
 
 
 /*Navbar*/
-.App > nav{
+nav{
   height: 3em;
   flex: 0 0 3em;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
   box-shadow: 0px 4px 4px -4px black;
-  overflow: visible;
+  overflow: visible !important;
+}
+@media(min-width: 660px){
+  nav{
+    justify-content: end;
+  }
 }
 .nav-user{
   width: fit-content;
@@ -131,21 +137,29 @@ nav img {
   margin: auto 0;
 }
 nav > a{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: 1rem;
   color: var(--primary-color-300);
   text-decoration: none;
   font-family: sans-serif;
-  font-size: 2.1rem;
+  font-size: 1.5rem;
   font-weight: 800;
+}
+@media(min-width: 660px){
+  nav > a{
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.1rem;
+  }
 }
 .user-btn{
   margin-right: 1rem;
 }
 .user-popup{
   background-color: var(--bg-250);
+  box-shadow: 2px 6px 6px 2px rgba(0, 0, 0, 0.164);
 }
 .user-popup ul{
   list-style: none;
