@@ -136,6 +136,24 @@ nav > img {
   color: white;
 }
 
+/*Popup button*/
+.popup-button-wrapper{
+  height: 100%;
+  position: relative;
+}
+.popup-button{
+  height: 100%;
+  width: fit-content;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.popup-button-popup{
+  position: absolute;
+  right: 0%;
+}
+
+
 /*Chat*/
 .chat-wrapper{
   position: relative;
