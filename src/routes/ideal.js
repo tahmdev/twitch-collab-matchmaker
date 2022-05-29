@@ -161,7 +161,7 @@ const Ideal = ({auth}) => {
             />
           </label>
           {invalidInput && <p>Please select at least one optional or required tag</p>}
-          <button type="submit" >Save</button>
+          <button className="primary-btn" type="submit" >Save</button>
         </form>
       </div>
       

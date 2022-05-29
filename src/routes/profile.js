@@ -145,7 +145,7 @@ const Profile = ({auth}) => {
 
         <div className="about-me">
           <h2>About me:</h2>
-        <p className="linebreak" > {description} </p>
+          <p className="linebreak" > {description} </p>
         </div>
         
         <div className="tags">

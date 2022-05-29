@@ -12,7 +12,6 @@ const MatchWrapper = ({auth, matches, setMatches}) => {
       matchRef.current.style.transition = "all 150ms ease-in-out"
       matchRef.current.style.transform = `translateX(${-window.innerWidth}px)`
       setTimeout(() => {
-          console.log(matchRef.current)
           document.getElementById("not-interested-icon").style.opacity = 0
           matchRef.current.style.transition = "all 0ms ease-in-out"
           matchRef.current.style.transform = `translateX(${window.innerWidth}px)`
@@ -88,7 +87,7 @@ const MatchWrapper = ({auth, matches, setMatches}) => {
   useEventListener("touchstart", handleTouchStart, matchRef.current, matchRef.current !== undefined, true )
   useEventListener("touchmove", handleTouchMove, document, matchRef.current !== undefined, true )
   useEventListener("touchend", handleTouchEnd, document, matchRef.current !== undefined, true )
-  
+
   return(
     <div className="match-wrapper" >
       <div className="container--small match-btn-container">

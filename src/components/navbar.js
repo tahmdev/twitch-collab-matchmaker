@@ -63,7 +63,7 @@ const Navbar = ({auth, setAuth}) => {
             setShow={setShowUserPopup}
           >
             <div className='nav-user flex-row'>
-              <p> {"auth.name"} </p>
+              <p> {auth.name} </p>
               <img src={auth.profilePicture} />
             </div>
 
