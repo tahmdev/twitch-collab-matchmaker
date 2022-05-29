@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-export default function useEventListener(type, callback, element, condition = true) {
+import { useEffect, useState } from "react";
+export default function useEventListener(type, callback, element, condition = true, force) {
+  let [forceEventListeners, setForceEventListeners] = useState(false)
   useEffect(() => {
     if(condition){
       let e = element.current || element
@@ -7,4 +8,10 @@ export default function useEventListener(type, callback, element, condition = tr
       return () => e.removeEventListener(type, callback)
     }
   }, [callback])
+
+  useEffect(() => {
+    if(force){
+      setForceEventListeners(true)
+    }
+  }, [element])
 }
