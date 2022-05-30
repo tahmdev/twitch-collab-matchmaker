@@ -111,6 +111,15 @@ button:focus-visible{
   background-color: var(--primary-color-300);
   color: white;
 }
+.large-only{
+  display: none;
+}
+@media (min-width: 660px) {
+  .large-only{
+    display: initial;
+  }
+}
+
 
 /*Landing*/
 .landing-background{

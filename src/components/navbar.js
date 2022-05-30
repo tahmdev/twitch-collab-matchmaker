@@ -43,16 +43,7 @@ const Navbar = ({auth, setAuth}) => {
 
   return(
     <nav>
-      
-      {!auth &&
-      <a
-        href="https://id.twitch.tv/oauth2/authorize?client_id=obvhzy0jyulcbijceoffcny9jlrlia&force_verify=true&redirect_uri=http://localhost:9000/auth/twitch/redirect&response_type=code&scope=user_read"
-      >
-        Connect With Twitch!
-      </a>
-      }
-
-      
+     
       {auth &&
         <>
           <Link to="/match" >Match me</Link>
@@ -63,7 +54,7 @@ const Navbar = ({auth, setAuth}) => {
             setShow={setShowUserPopup}
           >
             <div className='nav-user flex-row'>
-              <p> {auth.name} </p>
+              <p className='large-only' > {auth.name} </p>
               <img src={auth.profilePicture} />
             </div>
 
