@@ -188,7 +188,7 @@ nav{
 nav img {
   border-radius: 50%;
   height: 80%;
-  margin: auto 0;
+  margin: auto 0 auto 0.3rem;
 }
 nav > a{
   margin-left: 1rem;
@@ -283,6 +283,10 @@ nav > a{
     border-left: 1px solid var(--border-color);
     overflow: auto;
   }
+  .chat-partners{
+    border-right: 1px solid var(--border-color);
+    max-width: 250px;
+  }
 }
 .open-chat-btn{
   padding: 0.6rem;
@@ -319,7 +323,6 @@ nav > a{
 @media (min-width: 768px){
   .chat-window{
     position: initial;
-    border-left: 1px solid var(--border-color) ;
     border-right: 1px solid var(--border-color);
   }
 }
@@ -401,6 +404,11 @@ nav > a{
 }
 .chat-back-btn{
   padding: 1rem;
+}
+@media (min-width: 768px){
+  .chat-back-btn{
+    visibility: hidden;
+  }
 }
 .chat-settings-btn{
   display: flex;
@@ -564,6 +572,37 @@ nav > a{
 }
 .ideal-wrapper label{
   display: block;
+}
+
+
+/*Toast*/
+.ideal-toast-wrapper{
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  margin-right: 1rem;
+}
+.toast-notif{
+  position: relative;
+  color: white;
+  background-color: orange;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  padding-right: 2rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.toast-notif--Success{
+  background-color: var(--primary-color-300);
+}
+.toast-notif--Error{
+  background-color: rgb(196, 5, 5);
+}
+.close-toast-btn{
+  color: white;
+  position: absolute;
+  top: 5%;
+  right: 0;
 }
 
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Select from 'react-select'
 import MultiRange from "../components/multiRange"
+import Toast from "../components/toast"
 import tagList from "../data/tagList"
 const Ideal = ({auth}) => {
   let [isLoading, setIsLoading] = useState(true)
@@ -12,6 +13,7 @@ const Ideal = ({auth}) => {
   let [requiredTags, setRequiredTags] = useState([])
   let [viewCount, setViewCount] = useState([])
   let [invalidInput, setInvalidInput] = useState(false)
+  let [toast, setToast] = useState([])
 
   //Get initial state from db
   useEffect(() => {
@@ -48,6 +50,25 @@ const Ideal = ({auth}) => {
           optionalTags: optionalTags.map(i => i.value),
           viewCount: viewCount.map(i => i.value),
         })
+      })
+      .then(res => {
+        if(res.ok){
+          setToast(prev => [
+            ...prev,
+            {
+              text: "Saved successfuly",
+              type: "Success"
+            }
+          ])
+        }else{
+          setToast(prev => [
+            ...prev,
+            {
+              text: "Something went wrong",
+              type: "Error"
+            }
+          ])
+        }
       })
     }
   }
@@ -165,6 +186,14 @@ const Ideal = ({auth}) => {
         </form>
       </div>
       
+      <Toast 
+        arr={toast}
+        setArr={setToast}
+        classes={"ideal-toast-wrapper"}
+        autodelete={750}
+        max={3}
+      />
+
     </div>
   )
 }
