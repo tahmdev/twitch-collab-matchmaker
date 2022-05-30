@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import PopupButton from './popup-button';
-import { faUser, faArrowRightFromBracket, faGear, faHeart  } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faArrowRightFromBracket, faGear, faHeart, faMessage  } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 
 const Navbar = ({auth, setAuth}) => {
@@ -26,6 +26,12 @@ const Navbar = ({auth, setAuth}) => {
       icon: faHeart,
       role: "link",
       onClick: () => {navigate("/ideal"); setShowUserPopup(false)},
+    },
+    {
+      name: "Chat",
+      icon: faMessage,
+      role: "link",
+      onClick: () => {navigate("/chat"); setShowUserPopup(false)},
     },
     {
       name: "Settings",
