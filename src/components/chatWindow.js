@@ -10,6 +10,7 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
   let prevPartner = useRef()
   let prevMessagesHeight = useRef()
 
+  // handles scrolling to bottom on new messagesm, if not scrolled up & initial opening
   useEffect(() => {
     let el = chatMessagesRef.current
     prevMessagesHeight.current = el.clientHeight
@@ -69,20 +70,19 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
             if (idx === 0 || moment(`${msg.sentDate}`).format("DD MMMM YYYY") !==
                 moment(`${arr[idx - 1].sentDate}`).format("DD MMMM YYYY")) renderDate = true
             return(
-              <>
+              <div key={idx} className="contents" >
                 { renderDate &&
                   <div className="message-date">
                     {moment(`${msg.sentDate}`).format("DD MMMM YYYY")}
                   </div>
                 }
                 <ChatMessage
-                  key={idx}
                   content={msg.content}
                   sentBy={msg.sentBy}
                   date={msg.sentDate}
                   auth={auth}
                 />
-              </>
+              </div>
             )
           })
         }
