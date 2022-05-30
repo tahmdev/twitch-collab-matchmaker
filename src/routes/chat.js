@@ -10,12 +10,13 @@ const Chat = ({socket, auth}) => {
   useEffect(() => {
     fetch(`http://localhost:9000/chat/getChats/${auth.sessionID}`)
     .then(res => res.json())
-    .then(json => setChatPartners(json))
+    .then(json => {
+      if(window.innerWidth >= 768) openChat(json[0])
+      setChatPartners(json)
+    })
   }, [])
 
   useEffect(() => {
-    console.log(socket)
-    if(currentChat) console.log("BBBBB" + currentChat.id)
     socket.off("newMessage")
     socket.on("newMessage", msg => handleNewMessage(msg))
   }, [currentChat])
@@ -57,7 +58,7 @@ const Chat = ({socket, auth}) => {
   return(
     <div className="chat-wrapper">
       <div className="container--full-width flex-row ">
-        <div className="flex-column">
+        <div className="flex-column chat-partners">
           <ul>
             { 
               chatPartners &&
