@@ -39,6 +39,9 @@ button:focus-visible{
 .linebreak{
   white-space: pre-line;
 }
+.red-text{
+  color: rgb(212, 0, 0) !important;
+}
 
 
 /*Utility classes*/
@@ -526,10 +529,8 @@ nav > a{
 .months{
   flex: 0 1 35%
 }
-.birthday-select__indicators{
-  display: none;
-  visibility: hidden;
-  width: 0px;
+.years{
+  flex: 0 1 25%
 }
 
 

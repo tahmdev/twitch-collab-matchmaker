@@ -51,17 +51,26 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
     return result
   }
 
-  const getMinimumBirthday = (minAge = 0) => {
-    return moment().subtract(minAge, "years")
+  const getPaddedDate = (y, m, d) => {
+    return moment(`${y}-${padZeros(m, 2)}-${padZeros(d, 2)}`, "YYYY-MM-DD", true)
+  }
+
+  const getMinimumBirthday = (minAge = 0, format = "YYYY-MM-DD") => {
+    return moment().subtract(minAge, "years").format(format)
+  }
+
+  const handleBlur = () => {
+    let date = getPaddedDate(year.value, month.value, day.value)
+    
+    let dateIsValid = date.isBefore(getMinimumBirthday(minimumAge)) && date.isValid()
+    setValidDate(dateIsValid)
+    callback(date.format("YYYY-MM-DD HH:mm:ss"), dateIsValid)
   }
 
   useEffect(() => {
-    let minimumBirthday = getMinimumBirthday(minimumAge).format("YYYY-MM-DD");
-    let date = moment(`${year.value}-${padZeros(month.value, 2)}-${padZeros(day.value, 2)}`, "YYYY-MM-DD", true)
-    
-    let dateIsValid = date.isBefore(minimumBirthday) && date.isValid()
-    setValidDate(dateIsValid)
-    callback(date.format("YYYY-MM-DD HH:mm:ss"), dateIsValid)
+    let date = getPaddedDate(year.value, month.value, day.value)
+    let dateIsValid = date.isBefore(getMinimumBirthday(minimumAge)) && date.isValid()
+    if(dateIsValid) setValidDate(true)
   }, [day, month, year])
 
   const getRange = (end, start) => {
@@ -74,12 +83,16 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
 
   const maxYear = moment().subtract(minimumAge, "years").format("YYYY")
   return(
-    <div>
+    <div onBlur={handleBlur} >
+      <label>Birthday: </label>
       <div className="flex-row birthday-input" >
       <label className='days' >
         <span>Day:</span>
         <Select 
-        classNamePrefix='birthday-select'
+        components={{
+          IndicatorSeparator: () => null,
+          DropdownIndicator: () => null
+        }}
         value={day}
         onChange={setDay}
         placeholder="Day"
@@ -89,8 +102,11 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
         <label className='months' >
         <span>Month:</span>
           <Select
-            classNamePrefix='birthday-select'
             id = "month"
+            components={{
+              IndicatorSeparator: () => null,
+              DropdownIndicator: () => null
+            }}
             value={month}
             onChange={setMonth}
             placeholder="Month"
@@ -113,22 +129,25 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
           />
         </label>
         
-        <label>
+        <label className='years' >
           <span>Year:</span>
           {/* <input id="year" type="number" min={1900} max={maxYear} value={year} onChange={e => setYear(e.target.value)} /> */}
           <Select 
-          classNamePrefix='birthday-select'
+          components={{
+            IndicatorSeparator: () => null,
+            DropdownIndicator: () => null
+          }}
           value={year}
           onChange={setYear}
           placeholder="Year"
-          options={getRange(getMinimumBirthday(minimumAge).format("YYYY"), 1900)
+          options={getRange(getMinimumBirthday(minimumAge, "YYYY"), 1900)
             .sort((a, b) => b - a)
             .map(i => {return {value: i, label: i}})
           }
           />
         </label>
       </div>
-      <p style={{display: validDate ? "none" : "block"}} > Please enter a valid date </p>
+      <span className='red-text' style={{display: validDate ? "none" : "block"}} > Please enter a valid date </span>
     </div>
   )
 }
