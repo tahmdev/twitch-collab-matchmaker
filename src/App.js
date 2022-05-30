@@ -45,9 +45,27 @@ function App() {
     })
   }, [])
 
+  if(!auth){
+    return(
+      <div className='landing-background'>
+        <div className='landing-wrapper flex-column container'>
+          <h1>
+            Twitch matchmaker
+          </h1>
+          <a className='primary-btn'
+            href="https://id.twitch.tv/oauth2/authorize?client_id=obvhzy0jyulcbijceoffcny9jlrlia&force_verify=true&redirect_uri=http://localhost:9000/auth/twitch/redirect&response_type=code&scope=user_read"
+          >
+            Connect With Twitch
+          </a>
+          <p className='landing-subtitle' >Connect using your Twitch account and find your new favorite co-streamer today</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="App">
-      <Navbar auth={auth} />
+      <Navbar auth={auth} setAuth={setAuth} />
       <Routes>
         <Route path="/profile" element={ <Profile auth={auth} /> } />
         <Route path="/ideal" element={ <Ideal auth={auth} /> } />
