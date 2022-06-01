@@ -42,6 +42,9 @@ button:focus-visible{
 .red-text{
   color: rgb(212, 0, 0) !important;
 }
+.contents{
+  display: contents;
+}
 
 
 /*Utility classes*/
@@ -134,9 +137,12 @@ button:focus-visible{
   align-items: center;
 }
 .landing-wrapper{
+  max-width: 500px;
+  width: 100%;
+  height: fit-content;
+  padding: 4rem 0;
   justify-content: center;
   background-color: var(--bg-100);
-  height: 50%;
   text-align: center;
   border-radius: 2px;
   box-shadow: 4px 4px 5px 2px rgba(0, 0, 0, 0.521);
@@ -145,9 +151,14 @@ button:focus-visible{
   margin: 1rem 3rem;
 }
 .landing-wrapper > h1{
-  font-size: 2.7rem;
+  font-size: 2.3rem;
   color: var(--primary-color-400);
   font-family: sans-serif;
+}
+@media(min-width: 500px){
+  .landing-wrapper > h1{
+    font-size: 2.7rem;
+  }
 }
 .landing-wrapper > a{
   text-decoration: none;
