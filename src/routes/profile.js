@@ -1,12 +1,16 @@
+import { useLocation } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import BirthdayInput from "../components/birthdayInput"
 import Select from 'react-select'
+import Toast from "../components/toast"
 import moment from "moment"
 import tagList from "../data/tagList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 const Profile = ({auth}) => {
+  const location = useLocation()
+  console.log(location)
   let [edit, setEdit] = useState(false)
   let [description, setDescription] = useState("")
   let [birthday, setBirthday] = useState("1900-01-01")
@@ -15,7 +19,17 @@ const Profile = ({auth}) => {
   let [tags, setTags] = useState([])
   let [viewCount, setViewCount] = useState()
   let prevRef = useRef()
- 
+  let [toast, setToast] = useState(() => {
+    if(location.state){
+      return ([{
+        text: location.state.error,
+        type: "Error"
+      }])
+    }else{
+      return []
+    }
+  })
+
   //Set initial values
   useEffect(() => {
     fetch(`http://localhost:9000/db/getUser/${auth.sessionID}`)
@@ -24,10 +38,10 @@ const Profile = ({auth}) => {
       setDescription(json[0].description || "")
       setBirthday(json[0].birthday || "")
       setGender(json[0].gender || "")
-      setTags(JSON.parse(json[0].tags).map(i => {
+      setViewCount(json[0].viewCount || 0)
+      if(json[0].tags) setTags(JSON.parse(json[0].tags).map(i => {
         return {value: i, label: i}
       }))
-      setViewCount(json[0].viewCount || 0)
     })
   }, [])
   
@@ -54,7 +68,6 @@ const Profile = ({auth}) => {
       })
     })
     setEdit(false)
-    console.log("AAAA", birthday)
   }
 
   const handleCancel = () => {
@@ -79,10 +92,7 @@ const Profile = ({auth}) => {
   if(edit) return(
     <div className="profile-wrapper">
       <div className="container--small edit-profile profile">
-        <label>
-          <span>About Me: </span>
-          <textarea id="Description" type="textarea" value={description} onChange={e => setDescription(e.target.value)} />
-        </label>
+
         
         <BirthdayInput 
           minimumAge={13} 
@@ -118,6 +128,12 @@ const Profile = ({auth}) => {
             options={tagList}
           />
         </label>
+
+        <label>
+          <span>About Me: </span>
+          <textarea id="Description" type="textarea" value={description} onChange={e => setDescription(e.target.value)} />
+        </label>
+        
         <div className="split">
           <button className="secondary-btn" onClick={handleCancel} > Cancel </button>
           <button className="primary-btn" onClick={handleSave} disabled={!validDate}  > Save </button>
@@ -158,6 +174,15 @@ const Profile = ({auth}) => {
         </div>
 
       </div>
+
+      <Toast 
+        arr={toast}
+        setArr={setToast}
+        classes={"ideal-toast-wrapper"}
+        autodelete={1800}
+        max={3}
+      />
+
     </div>
   )
 }

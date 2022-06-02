@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react"
 import MatchWrapper from "../components/match-wrapper"
+import { useNavigate } from 'react-router-dom';
 
 const Match = ({auth}) => {
   let [matches, setMatches] = useState([])
+  const navigate = useNavigate();
   
   const handleFindMatches = () => {
     fetch(`http://localhost:9000/match/clearMatches/${auth.sessionID}`)
     .then(() => fetch(`http://localhost:9000/match/createMatches/${auth.sessionID}`))
-    .then(() => fetch(`http://localhost:9000/match/getMatches/${auth.sessionID}`))
     .then(res => res.json())
-    .then(json => setMatches(json))
+    .then(json => {
+      if(json.error === "Ideal"){
+        navigate("/ideal", {state: {error: "Please finish setting up your ideals"}})
+      }else if(json.error === "Profile"){
+        navigate("/profile", {state: {error: "Please finish setting up your profile"}})
+      }else{
+        fetch(`http://localhost:9000/match/getMatches/${auth.sessionID}`)
+        .then(res => res.json())
+        .then(json => setMatches(json))
+      }
+    })
   }
 
   useEffect(() => {

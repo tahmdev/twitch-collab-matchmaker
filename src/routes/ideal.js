@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
 import Select from 'react-select'
 import MultiRange from "../components/multiRange"
 import Toast from "../components/toast"
 import tagList from "../data/tagList"
 const Ideal = ({auth}) => {
+  const location = useLocation()
   let [isLoading, setIsLoading] = useState(true)
   let [partnerStatus, setPartnerStatus] = useState([])
   let [gender, setGender] = useState([])
@@ -13,7 +15,17 @@ const Ideal = ({auth}) => {
   let [requiredTags, setRequiredTags] = useState([])
   let [viewCount, setViewCount] = useState([])
   let [invalidInput, setInvalidInput] = useState(false)
-  let [toast, setToast] = useState([])
+  let [toast, setToast] = useState(() => {
+    if(location.state){
+      return ([{
+        text: location.state.error,
+        type: "Error"
+      }])
+    }else{
+      return []
+    }
+  })
+
 
   //Get initial state from db
   useEffect(() => {
@@ -190,7 +202,7 @@ const Ideal = ({auth}) => {
         arr={toast}
         setArr={setToast}
         classes={"ideal-toast-wrapper"}
-        autodelete={750}
+        autodelete={1800}
         max={3}
       />
 
