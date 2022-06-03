@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import ChatMessage from "./chatMessage"
 import moment from "moment"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import PopupButton from "./popup-button"
 
-const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack, auth}) => {
+const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack}) => {
   let [currentInput, setCurrentInput] = useState("")
   let [showSettings, setShowSettings] = useState(false)
   let chatMessagesRef = useRef()
@@ -97,7 +97,6 @@ const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack, auth})
                   content={msg.content}
                   sentBy={msg.sentBy}
                   date={msg.sentDate}
-                  auth={auth}
                 />
               </div>
             )

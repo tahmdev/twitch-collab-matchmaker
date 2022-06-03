@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import Select from 'react-select'
+import { AuthContext } from "../App"
 import MultiRange from "../components/multiRange"
 import Toast from "../components/toast"
 import tagList from "../data/tagList"
-const Ideal = ({auth}) => {
+const Ideal = () => {
+  const auth = useContext(AuthContext)
   const location = useLocation()
   let [isLoading, setIsLoading] = useState(true)
   let [partnerStatus, setPartnerStatus] = useState([])

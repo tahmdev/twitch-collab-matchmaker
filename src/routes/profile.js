@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom"
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import BirthdayInput from "../components/birthdayInput"
 import Select from 'react-select'
 import Toast from "../components/toast"
@@ -7,10 +7,11 @@ import moment from "moment"
 import tagList from "../data/tagList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { AuthContext } from "../App"
 
-const Profile = ({auth}) => {
+const Profile = () => {
+  const auth = useContext(AuthContext)
   const location = useLocation()
-  console.log(location)
   let [edit, setEdit] = useState(false)
   let [description, setDescription] = useState("")
   let [birthday, setBirthday] = useState("1900-01-01")

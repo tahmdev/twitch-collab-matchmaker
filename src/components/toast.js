@@ -2,8 +2,6 @@ import { useEffect, useRef } from "react";
 
 const Toast = ({arr, setArr, classes, autodelete, max}) => {
   const timer = useRef()
-  // Only run one timeout 
-  // 
 
   useEffect(() => {
     if(max && arr.length > max){

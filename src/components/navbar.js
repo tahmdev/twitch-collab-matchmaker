@@ -4,11 +4,13 @@ import useLocalstorage from '../hooks/useLocalStorage';
 import { Link, useNavigate } from 'react-router-dom';
 import PopupButton from './popup-button';
 import { faUser, faArrowRightFromBracket, faGear, faHeart, faMessage  } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Popup from './popup';
 import Switch from './switch';
+import { AuthContext } from '../App';
 
-const Navbar = ({auth, setAuth}) => {
+const Navbar = ({setAuth}) => {
+  const auth = useContext(AuthContext)
   const [showUserPopup, setShowUserPopup] = useState(false)
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [lightmode, setLightmode] = useLocalstorage("lightmode", false)

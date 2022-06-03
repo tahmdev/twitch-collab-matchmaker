@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import MatchWrapper from "../components/match-wrapper"
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../App";
 
-const Match = ({auth}) => {
+const Match = () => {
+  const auth = useContext(AuthContext)
   let [matches, setMatches] = useState([])
   const navigate = useNavigate();
   
@@ -33,7 +35,7 @@ const Match = ({auth}) => {
     return(
       <div className="matching">
         <div className="flex-column">
-          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
           <span> Finding matches... </span>
         </div>
       </div>

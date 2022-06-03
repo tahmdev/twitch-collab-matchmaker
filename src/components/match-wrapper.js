@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import useEventListener from "../hooks/useEventListener"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faX } from '@fortawesome/free-solid-svg-icons'
+import { AuthContext } from "../App"
 
-const MatchWrapper = ({auth, matches, setMatches}) => {
+const MatchWrapper = ({matches, setMatches}) => {
+  const auth = useContext(AuthContext)
   let [dragging, setDragging] = useState(false)
   const matchRef = useRef()
   const initialPos = useRef()

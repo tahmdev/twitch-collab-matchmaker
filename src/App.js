@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import Cookies from 'js-cookie';
 import io from "socket.io-client";
-
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState, createContext } from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import Navbar from './components/navbar';
 import Profile from './routes/profile';
@@ -12,23 +11,10 @@ import Match from './routes/match';
 import Chat from './routes/chat';
 const ENDPOINT = "http://localhost:9000/";
 const socket = io(ENDPOINT)
-// Match
-// => On accept 
-//  => add to accepted list
-//    => Check if partners accepted list includes user 
-//      => If true: add both to websocket room + send notification 
-//      => else: check if user is on partners declined list
-//        => if false: add  user to partners match queue
 
-// Settings
-// => Lightmode 
-// => Delte account
+export const AuthContext = createContext()
 
-// Backend
-// Generate new sessionID until found one that is unique
-// Also allow multiple sessionIDs
-// Create ideal entry on first login
-// birthday-input: Only show error message if not focused 
+
 
 function App() {
   let [auth, setAuth] = useState(() => {
@@ -48,7 +34,7 @@ function App() {
   if(!auth){
     return(
       <div className='landing-background'>
-        <div className='landing-wrapper flex-column container'>
+        <div className='landing-wrapper flex-column'>
           <h1>
             Twitch matchmaker
           </h1>
@@ -65,13 +51,16 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar auth={auth} setAuth={setAuth} />
-      <Routes>
-        <Route path="/profile" element={ <Profile auth={auth} /> } />
-        <Route path="/ideal" element={ <Ideal auth={auth} /> } />
-        <Route path="/match" element={ <Match auth={auth} /> } />
-        <Route path="/chat" element={ <Chat auth={auth} socket={socket} /> } />
-      </Routes>
+      <AuthContext.Provider value={auth}>
+        <Navbar auth={auth} setAuth={setAuth} />
+        <Routes>
+          <Route path="/profile" element={ <Profile auth={auth} /> } />
+          <Route path="/ideal" element={ <Ideal auth={auth} /> } />
+          <Route path="/match" element={ <Match auth={auth} /> } />
+          <Route path="/chat" element={ <Chat auth={auth} socket={socket} /> } />
+        </Routes>
+      </AuthContext.Provider>
+
     </div>
   );
 }

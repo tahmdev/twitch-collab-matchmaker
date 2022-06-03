@@ -140,7 +140,7 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
           value={year}
           onChange={setYear}
           placeholder="Year"
-          options={getRange(getMinimumBirthday(minimumAge, "YYYY"), 1900)
+          options={getRange(getMinimumBirthday(minimumAge, "YYYY"), 1901)
             .sort((a, b) => b - a)
             .map(i => {return {value: i, label: i}})
           }

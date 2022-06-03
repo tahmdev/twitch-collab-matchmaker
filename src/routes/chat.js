@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import ChatWindow from "../components/chatWindow"
 import moment from "moment"
+import { AuthContext } from "../App"
 
-const Chat = ({socket, auth}) => {
+const Chat = ({socket}) => {
+  const auth = useContext(AuthContext)
   let [chatPartners, setChatPartners] = useState()
   let [messages, setMessages] = useState()
   let [currentChat, setCurrentChat] = useState()
@@ -11,6 +13,7 @@ const Chat = ({socket, auth}) => {
     fetch(`http://localhost:9000/chat/getChats/${auth.sessionID}`)
     .then(res => res.json())
     .then(json => {
+      console.log(json)
       if(window.innerWidth >= 768) openChat(json[0])
       setChatPartners(json)
     })
@@ -61,8 +64,10 @@ const Chat = ({socket, auth}) => {
   }
 
   useEffect(() => {
-    if(window.innerWidth >= 768) openChat(chatPartners[0])
-    else handleBack()
+    if(chatPartners){
+      if(window.innerWidth >= 768) openChat(chatPartners[0])
+      else handleBack()
+    }
   }, [chatPartners])
 
   const handleBack = () => {
@@ -82,7 +87,7 @@ const Chat = ({socket, auth}) => {
                   <li key={partner.id} >
                     <button className="open-chat-btn" key={partner.id} onClick={() => openChat(partner)}>
                       <img src={partner.profilePicture} />
-                      <span> {partner.name} </span>
+                      <span className="fix-text" > {partner.name} </span>
                     </button>
                   </li>
                 )
@@ -98,7 +103,6 @@ const Chat = ({socket, auth}) => {
             partner={currentChat} 
             unmatch={unmatch}
             handleBack={handleBack}
-            auth={auth}
           />
         }
       </div>
