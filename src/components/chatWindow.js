@@ -3,9 +3,11 @@ import ChatMessage from "./chatMessage"
 import moment from "moment"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane, faArrowLeft, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import PopupButton from "./popup-button"
 
-const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
+const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack, auth}) => {
   let [currentInput, setCurrentInput] = useState("")
+  let [showSettings, setShowSettings] = useState(false)
   let chatMessagesRef = useRef()
   let prevPartner = useRef()
   let prevMessagesHeight = useRef()
@@ -48,6 +50,10 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
     document.getElementById("chat-textarea").style.height = "1.2rem"
   }
 
+  const handleUnmatch = () => {
+    unmatch()
+  }
+
   return(
     <div className="chat-window" >
       <div className="chat-header" >
@@ -58,9 +64,20 @@ const ChatWindow = ({messages, sendMessage, partner, handleBack, auth}) => {
           <img src={partner.profilePicture} />
           <h1>{partner.name}</h1>
         </div>
-        <button className="trans-btn chat-settings-btn" aria-label="Settings">
+        <PopupButton 
+          classes="trans-btn chat-settings-btn" 
+          aria-label="Settings"
+          popupClasses={"user-popup"}
+          show={showSettings}
+          setShow={setShowSettings}
+        >
           <FontAwesomeIcon icon={faEllipsisV} />
-        </button>
+          <div>
+            <button onClick={handleUnmatch} className="trans-btn">
+              Unmatch
+            </button>
+          </div>
+        </PopupButton>
       </div>
       
       <div className="chat-messages" ref={chatMessagesRef} >

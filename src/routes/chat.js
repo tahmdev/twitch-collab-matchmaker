@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import ChatWindow from "../components/chatWindow"
 import moment from "moment"
 
@@ -50,6 +50,21 @@ const Chat = ({socket, auth}) => {
     socket.emit("sendMessage", data)
   }
 
+  const unmatch = () => {
+    setChatPartners(prev => prev.filter(i => i.id !== currentChat.id))
+    fetch(`http://localhost:9000/match/unmatch/${auth.sessionID}/${currentChat.id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-type': 'application/json' 
+       },
+    })
+  }
+
+  useEffect(() => {
+    if(window.innerWidth >= 768) openChat(chatPartners[0])
+    else handleBack()
+  }, [chatPartners])
+
   const handleBack = () => {
     setCurrentChat(null)
     setMessages(null)
@@ -81,6 +96,7 @@ const Chat = ({socket, auth}) => {
             sendMessage={sendMessage} 
             messages={messages} 
             partner={currentChat} 
+            unmatch={unmatch}
             handleBack={handleBack}
             auth={auth}
           />
