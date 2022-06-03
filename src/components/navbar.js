@@ -4,9 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import PopupButton from './popup-button';
 import { faUser, faArrowRightFromBracket, faGear, faHeart, faMessage  } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
+import Popup from './popup';
 
 const Navbar = ({auth, setAuth}) => {
   const [showUserPopup, setShowUserPopup] = useState(false)
+  const [showSettingsPopup, setShowSettingsPopup] = useState(false)
+  const [lightmode, setLightmode] = useLocalstorage("lightmode", false)
   const navigate = useNavigate();
   const logout = () => {
     Cookies.remove("twitchMatchMakerauthCookie")
@@ -37,7 +40,7 @@ const Navbar = ({auth, setAuth}) => {
       name: "Settings",
       icon: faGear,
       role: "button",
-      onClick: () => {console.log("aa"); setShowUserPopup(false)},
+      onClick: () => {setShowSettingsPopup(true); setShowUserPopup(false)},
     },
     {
       name: "Logout",
@@ -49,7 +52,16 @@ const Navbar = ({auth, setAuth}) => {
 
   return(
     <nav>
-     
+    {showSettingsPopup &&
+      <Popup
+        setShow={setShowSettingsPopup}
+        classes={"settings-popup"}
+      >
+        <div className='settings'>
+          <h2>Settings</h2>
+        </div>
+      </Popup>
+    }
       {auth &&
         <>
           <Link to="/match" >Match me</Link>
