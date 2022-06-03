@@ -125,6 +125,9 @@ button:focus-visible{
     display: initial;
   }
 }
+.fix-text{
+  color: var(--text-color);
+}
 
 
 /*Landing*/
@@ -251,6 +254,40 @@ nav > a{
 .user-icon{
   color: var(--primary-color-300);
 }
+.popup-bg{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.411);
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.settings-popup{
+  height: fit-content;
+  width: 100%;
+  max-width: 300px;
+  position: relative;
+  background-color: var(--bg-100);
+  color: var(--text-color);
+  border-radius: 4px;
+}
+.close-popup{
+  right: 0;
+  top: 0;
+  position: absolute;
+}
+.settings{
+  margin: 1rem;
+}
+.settings ul{
+  list-style: none;
+  padding: 0;
+}
+.settings span{
+  margin-right: 1rem;
+}
 
 
 /*Popup button*/
@@ -264,6 +301,7 @@ nav > a{
   background-color: transparent;
   border: none;
   outline: none;
+  color: var(--text-color);
 }
 .popup-button-popup{
   position: absolute;
@@ -387,6 +425,8 @@ nav > a{
   border: 1px solid var(--border-color);
   border-right: none;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-200);
+  color: var(--text-color);
 }
 .chat-text-container::after{
   content: "";
@@ -399,6 +439,7 @@ nav > a{
   width: 2rem;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
+  background-color: var(--bg-200);
 }
 .send-message-btn{
   width: 2.4rem;
@@ -869,3 +910,40 @@ nav > a{
 }
 
 
+/*Switch*/
+/* Switch */
+.switch-input{
+  display: none;
+}
+.switch-label{
+  background-color: white;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  width: 2rem;
+  height: 1rem;
+  padding: 0.2rem;
+  border-radius: 25px;
+  -webkit-transition: 200ms;
+  transition: 200ms;
+}
+.switch-label:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  background-color: var(--bg-100);
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  border-radius: 50%;
+}
+.switch-input:checked + .switch-label:before{
+  transform: translateX(1rem);
+}
+/* Lightmode Switch */
+.lightmode-switch .switch-input:checked + .switch-label{
+  background-color: rgb(43, 43, 43);
+}
+.lightmode-switch .switch-input:checked + .switch-label:before{
+  background-color: white;
+}
