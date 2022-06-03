@@ -31,15 +31,21 @@ const Match = ({auth}) => {
 
   if(matches.length === 0){
     return(
-      <div className="match">
-        Finding matches please wait...
+      <div className="matching">
+        <div className="flex-column">
+          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          <span> Finding matches... </span>
+        </div>
       </div>
     )
   }
-
   if(matches[0] === "No matches"){
     return(
-      <div> We could not find any matches for you. Lower your standards or try again later. </div>
+      <div className="no-matches">
+        <p>
+          We could not find any matches for you. Try changing your ideals or try again later. 
+        </p>
+      </div>
     )
   }else{
     return(

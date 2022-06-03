@@ -268,6 +268,7 @@ nav > a{
 .popup-button-popup{
   position: absolute;
   right: 0%;
+  top: 100%;
 }
 
 
@@ -666,8 +667,6 @@ nav > a{
   justify-content: center;
   margin: auto;
 }
-
-
 #not-interested-icon,
 #interested-icon,
 #under-interested-icon,
@@ -728,6 +727,68 @@ nav > a{
   .not-interested-btn:hover > *{
     opacity: 1 !important;
   }
+}
+/*matching*/
+.matching{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+.matching > *{
+  align-items: center;
+}
+.matching span{
+  color: var(--primary-color-300);
+  font-size: 1.5rem;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0.7, 0.5, 1) infinite;
+  border-color: var(--primary-color-300) transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.40s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.25s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.10s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*no matches*/
+.no-matches{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.no-matches p{
+  color: var(--primary-color-300);
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1rem;
 }
 
 
@@ -806,3 +867,5 @@ nav > a{
 .slider-right-value{
   right: 0%;
 }
+
+
