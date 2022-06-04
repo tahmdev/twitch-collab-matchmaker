@@ -13,10 +13,12 @@ const ENDPOINT = "http://localhost:9000/";
 const socket = io(ENDPOINT)
 
 export const AuthContext = createContext()
+export const NotifContext = createContext()
 
 
 
 function App() {
+  let [notifs, setNotifs] = useState()
   let [auth, setAuth] = useState(() => {
     let cookie = Cookies.get("twitchMatchMakerauthCookie")
     if (cookie) return JSON.parse(cookie)
@@ -29,7 +31,23 @@ function App() {
         socket.emit("auth", auth.sessionID)
       }
     })
+    socket.off("newMessage")
+    socket.on("newMessage", () => getNotifs())
   }, [])
+
+  useEffect(() => {
+    if(auth){
+      getNotifs()
+    }
+  }, [])
+
+  const getNotifs = () => {
+    fetch(`http://localhost:9000/chat/getNotifications/${auth.sessionID}`)
+    .then(res => res.json())
+    .then(json => {
+      setNotifs(json)
+    })
+  }
 
   if(!auth){
     return(
@@ -51,15 +69,17 @@ function App() {
 
   return (
     <div className="App">
-      <AuthContext.Provider value={auth}>
-        <Navbar auth={auth} setAuth={setAuth} />
-        <Routes>
-          <Route path="/profile" element={ <Profile auth={auth} /> } />
-          <Route path="/ideal" element={ <Ideal auth={auth} /> } />
-          <Route path="/match" element={ <Match auth={auth} /> } />
-          <Route path="/chat" element={ <Chat auth={auth} socket={socket} /> } />
-        </Routes>
-      </AuthContext.Provider>
+      <NotifContext.Provider value={{notifs: notifs, getNotifs: getNotifs, setNotifs: setNotifs}}>
+        <AuthContext.Provider value={auth}>
+          <Navbar auth={auth} setAuth={setAuth} />
+          <Routes>
+            <Route path="/profile" element={ <Profile auth={auth} /> } />
+            <Route path="/ideal" element={ <Ideal auth={auth} /> } />
+            <Route path="/match" element={ <Match auth={auth} /> } />
+            <Route path="/chat" element={ <Chat auth={auth} socket={socket} /> } />
+          </Routes>
+        </AuthContext.Provider>
+      </NotifContext.Provider>
 
     </div>
   );

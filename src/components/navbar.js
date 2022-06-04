@@ -1,20 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Cookies from 'js-cookie';
 import useLocalstorage from '../hooks/useLocalStorage';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PopupButton from './popup-button';
-import { faUser, faArrowRightFromBracket, faGear, faHeart, faMessage  } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faArrowRightFromBracket, faGear, faHeart, faMessage, faBell, faX, faCircle  } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState } from 'react';
 import Popup from './popup';
 import Switch from './switch';
-import { AuthContext } from '../App';
+import { AuthContext, NotifContext } from '../App';
+
 
 const Navbar = ({setAuth}) => {
   const auth = useContext(AuthContext)
+  const {notifs, setNotifs} = useContext(NotifContext)
   const [showUserPopup, setShowUserPopup] = useState(false)
+  const [showNotif, setShowNotif] = useState(false)
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [lightmode, setLightmode] = useLocalstorage("lightmode", false)
   const navigate = useNavigate();
+  const location = useLocation();
   const logout = () => {
     Cookies.remove("twitchMatchMakerauthCookie")
     setAuth(null)
@@ -79,6 +83,18 @@ const Navbar = ({setAuth}) => {
     }
   }, [lightmode])
 
+  const dismissNotif = (i) => {
+    fetch(`http://localhost:9000/chat/setRead/${auth.sessionID}/${i.sentBy}`, 
+    {
+      method: "PUT"
+    })
+    setNotifs(prev => prev.filter(j => j.id !== i.id))
+  }
+
+  const handleClickNotification = (data) => {
+    navigate("/chat", {state: {data: data}})
+  }
+
   return(
     <nav>
     {showSettingsPopup &&
@@ -105,6 +121,50 @@ const Navbar = ({setAuth}) => {
       {auth &&
         <>
           <Link to="/match" >Match me</Link>
+          
+          <PopupButton
+            classes={"trans-btn notif-btn"}
+            popupClasses={"user-popup notif-popup"}
+            show={showNotif}
+            setShow={setShowNotif}
+          >
+            <div className='relative' >
+              <FontAwesomeIcon icon={faBell} className="user-icon notif-icon" />
+              {notifs && notifs.length > 0 && <FontAwesomeIcon icon={faCircle} className="notif-alert" />}
+            </div>
+            
+            {
+              notifs && notifs.length > 0
+              ?<ul className='notifs' >
+                {
+                  notifs.map(i => {
+                    return(
+                      <li key={i.id} className="relative" >
+                        <button className='trans-btn' onClick={i => handleClickNotification(i)} >
+                          <div className='flex-column'>
+                            <span className='fix-text' > {i.name} </span>
+                            <div className='flex-row'>
+                              <img src={i.profilePicture} />
+                              <span className='fix-text' > {i.content} </span>
+                            </div>
+                          </div>
+                        </button>
+                        <button className='dismiss-notif-btn' onClick={() => dismissNotif(i)} >
+                          <FontAwesomeIcon icon={faX} />
+                        </button> 
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+              :<div className='no-notifs' >
+                <span>
+                  No new messages :( 
+                </span>
+              </div>
+            }
+          </PopupButton>
+
           <PopupButton
             classes={"trans-btn user-btn"}
             popupClasses={"user-popup"}

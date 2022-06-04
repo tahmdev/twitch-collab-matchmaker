@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import ChatWindow from "../components/chatWindow"
 import moment from "moment"
-import { AuthContext } from "../App"
+import { AuthContext, NotifContext } from "../App"
+import { useLocation } from "react-router-dom"
 
 const Chat = ({socket}) => {
   const auth = useContext(AuthContext)
+  const location = useLocation()
+  const {getNotifs} = useContext(NotifContext)
   let [chatPartners, setChatPartners] = useState()
   let [messages, setMessages] = useState()
   let [currentChat, setCurrentChat] = useState()
@@ -13,8 +16,6 @@ const Chat = ({socket}) => {
     fetch(`http://localhost:9000/chat/getChats/${auth.sessionID}`)
     .then(res => res.json())
     .then(json => {
-      console.log(json)
-      if(window.innerWidth >= 768) openChat(json[0])
       setChatPartners(json)
     })
   }, [])
@@ -28,14 +29,17 @@ const Chat = ({socket}) => {
     if(currentChat.id === msg.sentBy){
       setMessages(prev => [...prev, msg])
     }else{
-      console.log("new message from ", msg.sentBy)
+      getNotifs()
     }
   }
 
   const openChat = (partner) => {
     fetch(`http://localhost:9000/chat/getHistory/${auth.sessionID}/${partner.id}`)
     .then(res => res.json())
-    .then(json => setMessages(json))
+    .then(json => {
+      setMessages(json)
+      getNotifs()
+    })
     setCurrentChat(partner)
   }
 
@@ -65,7 +69,14 @@ const Chat = ({socket}) => {
 
   useEffect(() => {
     if(chatPartners){
-      if(window.innerWidth >= 768) openChat(chatPartners[0])
+      if(location.state !== null){
+        openChat({
+          id: location.state.data.sentBy,
+          name: location.state.data.name,
+          profilePicture: location.state.data.profilePicture
+        })
+      }
+      else if(window.innerWidth >= 768) openChat(chatPartners[0])
       else handleBack()
     }
   }, [chatPartners])
