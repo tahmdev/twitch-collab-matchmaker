@@ -54,6 +54,13 @@ const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack}) => {
     unmatch()
   }
 
+  const handleKeyDown = (e) => {
+    if(e.key === "Enter" && e.shiftKey === false){
+      e.preventDefault()
+      handleSend()
+    }
+  }
+
   return(
     <div className="chat-window" >
       <div className="chat-header" >
@@ -64,6 +71,7 @@ const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack}) => {
           <img src={partner.profilePicture} />
           <h1>{partner.name}</h1>
         </div>
+
         <PopupButton 
           classes="trans-btn chat-settings-btn" 
           aria-label="Settings"
@@ -78,6 +86,7 @@ const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack}) => {
             </button>
           </div>
         </PopupButton>
+
       </div>
       
       <div className="chat-messages" ref={chatMessagesRef} >
@@ -104,11 +113,12 @@ const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack}) => {
         }
       </div>
 
-      <div className="chat-input" >
+      <form className="chat-input" >
         <div className="chat-text-container" >
           <textarea
             id="chat-textarea" 
-            onChange={e => setCurrentInput(e.target.value)} 
+            onChange={e => setCurrentInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             value={currentInput} 
             placeholder={`Message`}
           />
@@ -116,7 +126,7 @@ const ChatWindow = ({messages, sendMessage, partner, unmatch, handleBack}) => {
         <button className="send-message-btn" onClick={handleSend} aria-label="Send message">
           <FontAwesomeIcon icon={faPaperPlane} />
         </button>
-      </div>
+      </form>
     </div>
   )
 }
