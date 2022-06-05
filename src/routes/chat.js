@@ -86,6 +86,14 @@ const Chat = ({socket}) => {
     setMessages(null)
   }
 
+  if(!chatPartners){
+      return (
+        <div className="no-matches"> 
+          <p>No chats found</p>
+        </div>
+      )
+  }
+
   return(
     <div className="chat-wrapper">
       <div className="container--full-width flex-row ">
