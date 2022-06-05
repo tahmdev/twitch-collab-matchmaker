@@ -19,9 +19,12 @@ const Popup = ({setShow, children, classes, }) => {
   const handleHide = () => {
     setShow(false)
   }
+  useEffect(() => {
+    ref.current.focus()
+  }, [])
   return(
     <div className="popup-bg">
-      <div className={classes} ref={ref}>
+      <div tabIndex={1} className={classes} ref={ref}>
       {children}
         <button className="close-popup trans-btn" aria-label="Close Popup" onClick={handleHide} >
           <FontAwesomeIcon icon={faXmark}/>

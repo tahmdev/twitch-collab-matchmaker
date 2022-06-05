@@ -33,8 +33,9 @@ html, body, #root, .App {
 button:hover{
   cursor: pointer;
 }
-button:focus-visible{
-  outline: 2px solid cyan;
+button:focus-visible,
+a:focus-visible{
+  outline: 2px solid cyan !important;
 }
 .linebreak{
   white-space: pre-line;
@@ -409,6 +410,10 @@ nav > a{
 }
 .open-chat-btn span{
   margin-left: 0.5rem;
+}
+.open-chat-btn:focus-visible{
+  background-color: var(--bg-300) ;
+  outline: none !important;
 }
 
 
