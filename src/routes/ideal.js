@@ -106,7 +106,7 @@ const Ideal = () => {
             <span>Twitch Partner Status:</span>
             <Select 
               styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
-              className="react-select"
+              classNamePrefix="react-select"
               placeholder="Select all that apply"
               value={partnerStatus}
               onChange={selected => setPartnerStatus(selected)}
@@ -124,7 +124,7 @@ const Ideal = () => {
             <span>Gender: </span>
             <Select 
               styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
-              className="react-select"
+              classNamePrefix="react-select"
               placeholder="Select all that apply"
               value={gender}
               onChange={selected => setGender(selected)}
@@ -156,7 +156,7 @@ const Ideal = () => {
           <label>
             <span>Required Tags:</span>
             <Select 
-              className="react-select"
+              classNamePrefix="react-select"
               placeholder="Select all that apply"
               value={requiredTags}
               onChange={selected => setRequiredTags(selected)}
@@ -169,7 +169,7 @@ const Ideal = () => {
           <label>
             <span>Optional Tags:</span>
             <Select 
-              className="react-select"
+              classNamePrefix="react-select"
               placeholder="Select all that apply"
               value={optionalTags}
               onChange={selected => setOptionalTags(selected)}
@@ -182,7 +182,7 @@ const Ideal = () => {
           <label>
             <span>View Count</span>
             <Select 
-              className="react-select"
+              classNamePrefix="react-select"
               placeholder="Select all that apply"
               value={viewCount}
               onChange={selected => setViewCount(selected)}
@@ -195,7 +195,7 @@ const Ideal = () => {
               ]}
             />
           </label>
-          {invalidInput && <p>Please select at least one optional or required tag</p>}
+          {invalidInput && <p className="red-text" >Please select at least one optional or required tag</p>}
           <button className="primary-btn" type="submit" >Save</button>
         </form>
       </div>

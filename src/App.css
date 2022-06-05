@@ -997,3 +997,8 @@ nav > a{
 .lightmode-switch .switch-input:checked + .switch-label:before{
   background-color: white;
 }
+
+
+.react-select__menu-list{
+  color: black;
+}

@@ -81,7 +81,6 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
     return(result)
   }
 
-  const maxYear = moment().subtract(minimumAge, "years").format("YYYY")
   return(
     <div onBlur={handleBlur} >
       <label>Birthday: </label>
@@ -89,19 +88,21 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
       <label className='days' >
         <span>Day:</span>
         <Select 
-        components={{
-          IndicatorSeparator: () => null,
-          DropdownIndicator: () => null
-        }}
-        value={day}
-        onChange={setDay}
-        placeholder="Day"
-        options={getRange(31, 1).map(i => {return {value: i, label: i}})} 
+          classNamePrefix="react-select"
+          components={{
+            IndicatorSeparator: () => null,
+            DropdownIndicator: () => null
+          }}
+          value={day}
+          onChange={setDay}
+          placeholder="Day"
+          options={getRange(31, 1).map(i => {return {value: i, label: i}})} 
         />
       </label>
         <label className='months' >
         <span>Month:</span>
           <Select
+            classNamePrefix="react-select"
             id = "month"
             components={{
               IndicatorSeparator: () => null,
@@ -133,6 +134,7 @@ const BirthdayInput = ({minimumAge, callback, initial}) => {
           <span>Year:</span>
           {/* <input id="year" type="number" min={1900} max={maxYear} value={year} onChange={e => setYear(e.target.value)} /> */}
           <Select 
+          classNamePrefix="react-select"
           components={{
             IndicatorSeparator: () => null,
             DropdownIndicator: () => null
