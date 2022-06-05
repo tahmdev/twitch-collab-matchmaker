@@ -18,7 +18,6 @@ const Navbar = ({setAuth}) => {
   const [showSettingsPopup, setShowSettingsPopup] = useState(false)
   const [lightmode, setLightmode] = useLocalstorage("lightmode", false)
   const navigate = useNavigate();
-  const location = useLocation();
   const logout = () => {
     Cookies.remove("twitchMatchMakerauthCookie")
     setAuth(null)
@@ -122,73 +121,76 @@ const Navbar = ({setAuth}) => {
         <>
           <Link to="/match" >Match me</Link>
           
-          <PopupButton
-            classes={"trans-btn notif-btn"}
-            popupClasses={"user-popup notif-popup"}
-            show={showNotif}
-            setShow={setShowNotif}
-          >
-            <div className='relative' >
-              <FontAwesomeIcon icon={faBell} className="user-icon notif-icon" />
-              {notifs && notifs.length > 0 && <FontAwesomeIcon icon={faCircle} className="notif-alert" />}
-            </div>
-            
-            {
-              notifs && notifs.length > 0
-              ?<ul className='notifs' >
-                {
-                  notifs.map(i => {
-                    return(
-                      <li key={i.id} className="relative" >
-                        <button className='trans-btn' onClick={i => handleClickNotification(i)} >
-                          <div className='flex-column'>
-                            <span className='fix-text' > {i.name} </span>
-                            <div className='flex-row'>
-                              <img src={i.profilePicture} />
-                              <span className='fix-text' > {i.content} </span>
-                            </div>
-                          </div>
-                        </button>
-                        <button className='dismiss-notif-btn' onClick={() => dismissNotif(i)} >
-                          <FontAwesomeIcon icon={faX} />
-                        </button> 
-                      </li>
-                    )
-                  })
-                }
-              </ul>
-              :<div className='no-notifs' >
-                <span>
-                  No new messages :( 
-                </span>
+          <div className='flex-row user-notif-wrapper'>
+            <PopupButton
+              classes={"trans-btn notif-btn"}
+              popupClasses={"user-popup notif-popup"}
+              show={showNotif}
+              setShow={setShowNotif}
+            >
+              <div className='relative' >
+                <FontAwesomeIcon icon={faBell} className="user-icon notif-icon" />
+                {notifs && notifs.length > 0 && <FontAwesomeIcon icon={faCircle} className="notif-alert" />}
               </div>
-            }
-          </PopupButton>
+              
+              {
+                notifs && notifs.length > 0
+                ?<ul className='notifs' >
+                  {
+                    notifs.map(i => {
+                      return(
+                        <li key={i.id} className="relative" >
+                          <button className='trans-btn' onClick={i => handleClickNotification(i)} >
+                            <div className='flex-column'>
+                              <span className='fix-text' > {i.name} </span>
+                              <div className='flex-row'>
+                                <img src={i.profilePicture} />
+                                <span className='fix-text' > {i.content} </span>
+                              </div>
+                            </div>
+                          </button>
+                          <button className='dismiss-notif-btn' onClick={() => dismissNotif(i)} >
+                            <FontAwesomeIcon icon={faX} />
+                          </button> 
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+                :<div className='no-notifs' >
+                  <span>
+                    No new messages :( 
+                  </span>
+                </div>
+              }
+            </PopupButton>
 
-          <PopupButton
-            classes={"trans-btn user-btn"}
-            popupClasses={"user-popup"}
-            show={showUserPopup}
-            setShow={setShowUserPopup}
-          >
-            <div className='nav-user flex-row'>
-              <p className='large-only' > {auth.name} </p>
-              <img src={auth.profilePicture} />
-            </div>
+            <PopupButton
+              classes={"trans-btn user-btn"}
+              popupClasses={"user-popup"}
+              show={showUserPopup}
+              setShow={setShowUserPopup}
+            >
+              <div className='nav-user flex-row'>
+                <p className='large-only' > {auth.name} </p>
+                <img src={auth.profilePicture} />
+              </div>
 
-            <ul>
-              {popup.map(i => {
-                return(
-                  <li key={i.name} >
-                    <button onClick={i.onClick} role={i.role} >
-                      <FontAwesomeIcon icon={i.icon} className="user-icon" />
-                      <span className='fix-text'>{i.name}</span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          </PopupButton>
+              <ul>
+                {popup.map(i => {
+                  return(
+                    <li key={i.name} >
+                      <button onClick={i.onClick} role={i.role} >
+                        <FontAwesomeIcon icon={i.icon} className="user-icon" />
+                        <span className='fix-text'>{i.name}</span>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </PopupButton>
+          </div>
+
         </>
       }
     </nav>
