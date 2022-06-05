@@ -73,6 +73,7 @@ function App() {
         <AuthContext.Provider value={auth}>
           <Navbar auth={auth} setAuth={setAuth} />
           <Routes>
+            <Route path="/" element={<Navigate replace to="/match"/>} />
             <Route path="/profile" element={ <Profile auth={auth} /> } />
             <Route path="/ideal" element={ <Ideal auth={auth} /> } />
             <Route path="/match" element={ <Match auth={auth} /> } />
