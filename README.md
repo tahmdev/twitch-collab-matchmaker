@@ -1,4 +1,4 @@
-#About this project
+# About this project
 An app that allows Twitch livestreamers to find other streamers to collaborate with based on their preferences. It is deployed at https://twitch-matchmaker.herokuapp.com/ (It may take a few seconds for the Heroku server to wake up)
 
 # Getting Started with Create React App
